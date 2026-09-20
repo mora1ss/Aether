@@ -360,7 +360,14 @@ Item {
                                                 let ic = modelData.icon || "";
                                                 if (!ic) return "";
                                                 if (ic.startsWith("file://") || ic.startsWith("image://") || ic.startsWith("http://") || ic.startsWith("https://")) return ic;
-                                                return ic.startsWith("/") ? "file://" + ic : "image://icon/" + ic;
+                                                if (ic.startsWith("/")) return "file://" + ic;
+                                                if (typeof Quickshell !== "undefined" && typeof Quickshell.iconPath === "function") {
+                                                    let resolved = Quickshell.iconPath(ic);
+                                                    if (resolved && resolved.length > 0) {
+                                                        return resolved.startsWith("/") ? ("file://" + resolved) : resolved;
+                                                    }
+                                                }
+                                                return "";
                                             }
 
                                             onStatusChanged: {

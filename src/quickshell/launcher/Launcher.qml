@@ -1415,7 +1415,7 @@ PanelWindow {
                                                         }
                                                     }
 
-                                                    return "image://icon/" + baseName;
+                                                    return "";
                                                 }
 
                                                 sourceSize: Qt.size(64, 64)

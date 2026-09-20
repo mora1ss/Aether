@@ -112,6 +112,7 @@ let
     qt6.qtmultimedia
     qt6.qt5compat
     qt6.qtwebsockets
+    qt6.qtsvg
   ];
   qmlImportPath = lib.concatMapStringsSep ":" (pkg: "${pkg}/lib/qt-6/qml") qtDeps;
   qtPluginPath = lib.concatMapStringsSep ":" (pkg: "${pkg}/lib/qt-6/plugins") qtDeps;

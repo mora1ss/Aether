@@ -54,7 +54,7 @@ REQUIRED_PKGS=(
     "imagemagick" "wget" "file" "git" "psmisc"
     "ffmpeg" "fastfetch" "quickshell" "unzip" "python-websockets" "qt6-websockets"
     "grim" "playerctl" "satty" "xdg-desktop-portal-gtk" "slurp" "wmctrl" "power-profiles-daemon" "easyeffects" "nautilus" "qt5-wayland" "qt5-quickcontrols" "qt5-quickcontrols2" "qt5-graphicaleffects" "qt6-wayland"
-    "qt5ct" "qt6ct" "gpu-screen-recorder" "wf-recorder" "adw-gtk-theme" "wl-gammarelay-rs"
+    "qt5ct" "qt6ct" "qt5-svg" "qt6-svg" "gpu-screen-recorder" "wf-recorder" "adw-gtk-theme" "adwaita-icon-theme" "adwaita-icon-theme-legacy" "hicolor-icon-theme" "wl-gammarelay-rs"
 )
 
 FAILED_PKGS=()

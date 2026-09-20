@@ -240,6 +240,28 @@ EOF
     echo -e "  \e[32m$(t "installer.deploy.sddm_success")\e[0m"
 }
 
+seed_icon_theme_configs() {
+    local gtk_settings
+    gtk_settings="$(printf '%s\n' '[Settings]' 'gtk-theme-name=adw-gtk3-dark' 'gtk-icon-theme-name=Adwaita')"
+    local qt_conf
+    qt_conf="$(printf '%s\n' '[Appearance]' 'icon_theme=Adwaita' 'standard_dialogs=default' 'style=Fusion')"
+
+    mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0" "$HOME/.config/qt6ct" "$HOME/.config/qt5ct"
+
+    if [ ! -f "$HOME/.config/gtk-3.0/settings.ini" ]; then
+        printf '%s\n' "$gtk_settings" > "$HOME/.config/gtk-3.0/settings.ini"
+    fi
+    if [ ! -f "$HOME/.config/gtk-4.0/settings.ini" ]; then
+        printf '%s\n' "$gtk_settings" > "$HOME/.config/gtk-4.0/settings.ini"
+    fi
+    if [ ! -f "$HOME/.config/qt6ct/qt6ct.conf" ]; then
+        printf '%s\n' "$qt_conf" > "$HOME/.config/qt6ct/qt6ct.conf"
+    fi
+    if [ ! -f "$HOME/.config/qt5ct/qt5ct.conf" ]; then
+        printf '%s\n' "$qt_conf" > "$HOME/.config/qt5ct/qt5ct.conf"
+    fi
+}
+
 deploy_package() {
     local REPO_ROOT="$1"
     local OLD_COMMIT="$2"
@@ -441,4 +463,6 @@ deploy_package() {
         ln -sf "$TARGET_BASE/bin/aetherd" "$BIN_DIR/aetherd"
         sudo ln -sf "$TARGET_BASE/bin/aetherd" /usr/local/bin/aetherd 2>/dev/null || true
     fi
+
+    seed_icon_theme_configs
 }

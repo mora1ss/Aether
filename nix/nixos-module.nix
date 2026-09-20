@@ -25,5 +25,9 @@ in
     };
 
     fonts.packages = [ pkgs.nerd-fonts.iosevka ];
+
+    environment.systemPackages = [
+      pkgs.adwaita-icon-theme
+    ] ++ lib.optional (pkgs ? adwaita-icon-theme-legacy) pkgs.adwaita-icon-theme-legacy;
   };
 }

@@ -1,4 +1,5 @@
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 exec systemctl --user enable --now easyeffects
-exec aetherd start
+exec systemctl --user set-environment QT_QPA_PLATFORMTHEME=qt6ct
+exec env QT_QPA_PLATFORMTHEME=qt6ct aetherd start
