@@ -441,6 +441,30 @@ PanelWindow {
         return null;
     }
 
+    function desktopIdBase(desktopId) {
+        return (desktopId || "").toLowerCase().replace(/\.desktop$/, "");
+    }
+
+    function isHwlocDesktop(desktopId) {
+        let id = desktopIdBase(desktopId);
+        return id === "lstopo" || id === "hwloc" || id.indexOf("lstopo") !== -1 || id.indexOf("hwloc") !== -1;
+    }
+
+    function isGenericQtIcon(resolved, iconName) {
+        let r = (resolved || "").toLowerCase();
+        let n = (iconName || "").toLowerCase();
+        if (r.indexOf("qtlogo") !== -1 || r.indexOf("qt-logo") !== -1 || r.indexOf("qtproject") !== -1)
+            return true;
+        if (n.indexOf("qtlogo") !== -1 || n.indexOf("qt-logo") !== -1 || n.indexOf("qtproject") !== -1)
+            return true;
+        if (typeof Quickshell !== "undefined" && typeof Quickshell.iconPath === "function") {
+            let generic = Quickshell.iconPath("application-x-executable");
+            if (generic && resolved && resolved === generic)
+                return true;
+        }
+        return false;
+    }
+
     function loadApps() {
         let arr = [];
 
@@ -469,12 +493,13 @@ PanelWindow {
                     score = f_score + l_score + (0.5 * c_score);
                 }
 
+                let hwlocApp = isHwlocDesktop(e.id);
                 arr.push({
                     name: e.name,
                     description: e.comment || "",
                     desktop_id: e.id,
-                    icon: e.icon || "",
-                    fontIcon: "",
+                    icon: hwlocApp ? "" : (e.icon || ""),
+                    fontIcon: hwlocApp ? "󰘚" : "",
                     score: score,
                     isCommand: false,
                     command: "",
@@ -1404,13 +1429,19 @@ PanelWindow {
                                                     if (model.fontIcon && model.fontIcon !== "") return "";
                                                     let ic = model.icon || "";
                                                     if (!ic) return "";
-                                                    if (ic.startsWith("file://") || ic.startsWith("image://") || ic.startsWith("http://") || ic.startsWith("https://")) return ic;
-                                                    if (ic.startsWith("/")) return "file://" + ic;
+                                                    if (ic.startsWith("file://") || ic.startsWith("image://") || ic.startsWith("http://") || ic.startsWith("https://")) {
+                                                        if (launcherWindow.isGenericQtIcon(ic, ic)) return "";
+                                                        return ic;
+                                                    }
+                                                    if (ic.startsWith("/")) {
+                                                        if (launcherWindow.isGenericQtIcon(ic, ic)) return "";
+                                                        return "file://" + ic;
+                                                    }
 
                                                     let baseName = ic.replace(/\.(png|svg|xpm|ico)$/i, "");
                                                     if (typeof Quickshell !== "undefined" && typeof Quickshell.iconPath === "function") {
                                                         let resolved = Quickshell.iconPath(ic) || Quickshell.iconPath(baseName);
-                                                        if (resolved && resolved.length > 0) {
+                                                        if (resolved && resolved.length > 0 && !launcherWindow.isGenericQtIcon(resolved, ic)) {
                                                             return resolved.startsWith("/") ? ("file://" + resolved) : resolved;
                                                         }
                                                     }
