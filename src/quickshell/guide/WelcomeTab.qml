@@ -147,7 +147,7 @@ Item {
                     anchors.centerIn: parent
                     width: rootObj.s(210)
                     height: rootObj.s(210)
-                    source: "file://" + rootObj.appPaths.serpantinumDir + "/assets/logo.svg"
+                    source: "file://" + rootObj.appPaths.aetherDir + "/assets/logo.svg"
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                     smooth: true
@@ -288,7 +288,7 @@ Item {
             }
 
             Text {
-                text: I18n.t("guide.welcome.by_author", { author: "ilyamiro" })
+                text: I18n.t("guide.welcome.by_author", { author: "mora1ss" })
                 font.family: ThemeBackend.fontFamily
                 font.pixelSize: rootObj.s(14)
                 color: ThemeBackend.subtext0

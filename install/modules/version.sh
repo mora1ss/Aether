@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
 MODULE_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-if [ -z "$SERPANTINUM_DIR" ]; then
+if [ -z "$AETHER_DIR" ]; then
     if [ -d "$(dirname "$(dirname "$MODULE_DIR")")/src" ]; then
-        export SERPANTINUM_DIR="$(dirname "$(dirname "$MODULE_DIR")")/src"
+        export AETHER_DIR="$(dirname "$(dirname "$MODULE_DIR")")/src"
     fi
 fi
 
-if [ -n "$SERPANTINUM_DIR" ] && [ -f "$SERPANTINUM_DIR/scripts/caching.sh" ]; then
-    source "$SERPANTINUM_DIR/scripts/caching.sh"
+if [ -n "$AETHER_DIR" ] && [ -f "$AETHER_DIR/scripts/caching.sh" ]; then
+    source "$AETHER_DIR/scripts/caching.sh"
 fi
 
-STATE_DIR="${QS_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/serpantinum}"
+STATE_DIR="${QS_STATE_DIR:-${XDG_STATE_HOME:-$HOME/.local/state}/aether}"
 VERSION_FILE="$STATE_DIR/version"
 DEFAULT_FALLBACK_VERSION="2.0.0"
 
@@ -50,30 +50,22 @@ get_telemetry_id() {
 }
 
 get_telemetry_enabled() {
-    if [ -f "$VERSION_FILE" ]; then
-        local enabled
-        enabled=$(awk -F= '/^ENABLE_TELEMETRY=/{gsub(/"/, "", $2); print $2}' "$VERSION_FILE")
-        if [ "$enabled" = "false" ]; then
-            echo "false"
-            return
-        fi
-    fi
-    echo "true"
+    echo "false"
 }
 
 get_installed_version() {
     local ver=""
     if [ -f "$VERSION_FILE" ]; then
-        ver=$(awk -F= '/^SERPANTINUM_VERSION=/{gsub(/"/, "", $2); print $2}' "$VERSION_FILE")
+        ver=$(awk -F= '/^AETHER_VERSION=/{gsub(/"/, "", $2); print $2}' "$VERSION_FILE")
     fi
-    if [ -z "$ver" ] && [ -n "$SERPANTINUM_VERSION" ]; then
-        ver="$SERPANTINUM_VERSION"
+    if [ -z "$ver" ] && [ -n "$AETHER_VERSION" ]; then
+        ver="$AETHER_VERSION"
     fi
     if [ -z "$ver" ]; then
-        if [ -n "$SERPANTINUM_DIR" ] && [ -f "$SERPANTINUM_DIR/version.txt" ]; then
-            ver=$(cat "$SERPANTINUM_DIR/version.txt" 2>/dev/null | xargs)
-        elif [ -n "$SERPANTINUM_DIR" ] && [ -f "$(dirname "$SERPANTINUM_DIR")/version.txt" ]; then
-            ver=$(cat "$(dirname "$SERPANTINUM_DIR")/version.txt" 2>/dev/null | xargs)
+        if [ -n "$AETHER_DIR" ] && [ -f "$AETHER_DIR/version.txt" ]; then
+            ver=$(cat "$AETHER_DIR/version.txt" 2>/dev/null | xargs)
+        elif [ -n "$AETHER_DIR" ] && [ -f "$(dirname "$AETHER_DIR")/version.txt" ]; then
+            ver=$(cat "$(dirname "$AETHER_DIR")/version.txt" 2>/dev/null | xargs)
         elif [ -n "$REPO_ROOT" ] && [ -f "$REPO_ROOT/version.txt" ]; then
             ver=$(cat "$REPO_ROOT/version.txt" 2>/dev/null | xargs)
         fi
@@ -86,13 +78,13 @@ get_installed_version() {
 
 get_installed_commit() {
     if [ -f "$VERSION_FILE" ]; then
-        awk -F= '/^SERPANTINUM_COMMIT=/{gsub(/"/, "", $2); print $2}' "$VERSION_FILE"
+        awk -F= '/^AETHER_COMMIT=/{gsub(/"/, "", $2); print $2}' "$VERSION_FILE"
     fi
 }
 
 get_target_version() {
     local repo_root="$1"
-    local repo_slug="${2:-"${REPO_SLUG:-"ilyamiro/serpantinum"}"}"
+    local repo_slug="${2:-"${REPO_SLUG:-"mora1ss/aether"}"}"
     local target_ver=""
 
     if [ -f "$repo_root/version.txt" ]; then
@@ -114,7 +106,7 @@ get_target_version() {
 
 get_target_commit() {
     local repo_root="$1"
-    local repo_slug="${2:-"${REPO_SLUG:-"ilyamiro/serpantinum"}"}"
+    local repo_slug="${2:-"${REPO_SLUG:-"mora1ss/aether"}"}"
     local target_commit=""
 
     if [ -d "$repo_root/.git" ] && command -v git &>/dev/null; then
@@ -154,8 +146,8 @@ write_version_state() {
     mkdir -p "$STATE_DIR"
     local tmp_file="${VERSION_FILE}.tmp.$$"
     cat <<EOF > "$tmp_file"
-SERPANTINUM_VERSION="$version"
-SERPANTINUM_COMMIT="$commit"
+AETHER_VERSION="$version"
+AETHER_COMMIT="$commit"
 TELEMETRY_ID="$tel_id"
 ENABLE_TELEMETRY="$tel_enabled"
 SELECTED_COMPOSITORS="$compositors"

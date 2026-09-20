@@ -1,11 +1,5 @@
 <div align="center">
-  <a href="https://ko-fi.com/ilyamiro">
-    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi" />
-  </a>
-</div>
-
-<div align="center">
-  <img src="docs/assets/banner.png" alt="Serpantinum" width="850" />
+  <img src="docs/assets/banner.png" alt="Aether" width="850" />
 </div>
 
 ## Previews
@@ -27,7 +21,7 @@
 For Arch-based distributions (including systemd, OpenRC, and other init systems), run the automated installation script.:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ilyamiro/serpantinum/master/install/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/mora1ss/aether/master/install/install.sh)"
 
 ```
 
@@ -38,26 +32,26 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/ilyamiro/serpantinum/mas
 
 ### NixOS
 
-Serpantinum provides flake outputs, a NixOS module for system dependencies, and a Home Manager module for user configuration and service management.
+Aether provides flake outputs, a NixOS module for system dependencies, and a Home Manager module for user configuration and service management.
 
 #### 1. Add Flake Input
 
-Add Serpantinum to your `flake.nix`:
+Add Aether to your `flake.nix`:
 
 ```nix
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    serpantinum.url = "github:ilyamiro/serpantinum";
+    aether.url = "github:mora1ss/aether";
   };
 
-  outputs = { self, nixpkgs, serpantinum, ... }: {
+  outputs = { self, nixpkgs, aether, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit serpantinum; };
+      specialArgs = { inherit aether; };
       modules = [
         ./configuration.nix
-        serpantinum.nixosModules.default
+        aether.nixosModules.default
       ];
     };
   };
@@ -71,7 +65,7 @@ Enable the NixOS module to configure system prerequisites:
 
 ```nix
 {
-  programs.serpantinum.enable = true;
+  programs.aether.enable = true;
 }
 
 ```
@@ -79,11 +73,11 @@ Enable the NixOS module to configure system prerequisites:
 If you prefer installing the package directly without the system module:
 
 ```nix
-{ pkgs, serpantinum, ... }:
+{ pkgs, aether, ... }:
 
 {
   environment.systemPackages = [
-    serpantinum.packages.${pkgs.stdenv.hostPlatform.system}.default
+    aether.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
 
@@ -92,14 +86,14 @@ If you prefer installing the package directly without the system module:
 #### 3. Home Manager Configuration
 
 ```nix
-{ serpantinum, ... }:
+{ aether, ... }:
 
 {
   imports = [
-    serpantinum.homeManagerModules.default
+    aether.homeManagerModules.default
   ];
 
-  programs.serpantinum = {
+  programs.aether = {
     enable = true;
     systemd.enable = true;
 
@@ -146,13 +140,13 @@ If you prefer installing the package directly without the system module:
 Update the flake lockfile and rebuild your system:
 
 ```bash
-nix flake update serpantinum
+nix flake update aether
 sudo nixos-rebuild switch --flake .
 
 ```
 
 > **Note:** The automatic installer handles compositor integration on standard distributions. On NixOS / Home Manager, you must manually integrate compositor configs.
-> Sample configs, autostart entries, and keybindings for supported window managers and compositors are available in the [compositors](https://github.com/ilyamiro/serpantinum/tree/master/compositors) directory.
+> Sample configs, autostart entries, and keybindings for supported window managers and compositors are available in the [compositors](https://github.com/mora1ss/aether/tree/master/compositors) directory.
 
 
 #### Required autostart
@@ -173,7 +167,7 @@ end)
 
 ## Running
 
-To run the shell, launch `serpantinumd start`
+To run the shell, launch `aetherd start`
 
 ---
 

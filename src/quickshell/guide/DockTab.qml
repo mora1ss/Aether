@@ -298,7 +298,7 @@ Item {
                                 if (typeof Sounds !== "undefined") {
                                     Sounds.playSfx(dockTabRoot.currentEditing ? "guide/barconfig/out.wav" : "guide/barconfig/in.wav");
                                 }
-                                Quickshell.execDetached(["bash", Caching.serpantinumDir + "/scripts/qs_manager.sh", "close"]);
+                                Quickshell.execDetached(["bash", Caching.aetherDir + "/scripts/qs_manager.sh", "close"]);
                             }
                         }
                     }

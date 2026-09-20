@@ -7,14 +7,14 @@ import "../../"
 Item {
     id: root
 
-    readonly property string serpantinumDir: {
-        if (typeof Caching !== "undefined" && Caching.serpantinumDir) {
-            return Caching.serpantinumDir;
+    readonly property string aetherDir: {
+        if (typeof Caching !== "undefined" && Caching.aetherDir) {
+            return Caching.aetherDir;
         }
         return "";
     }
 
-    readonly property string helperScript: root.serpantinumDir + "/scripts/first_launch.sh"
+    readonly property string helperScript: root.aetherDir + "/scripts/first_launch.sh"
 
     property bool isFirstLaunch: false
     property bool executed: false

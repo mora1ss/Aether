@@ -287,7 +287,7 @@ Item {
 
     FileView {
         id: tutorialWatcher
-        path: Caching.serpantinumDir ? (Caching.serpantinumDir + "/assets/tutorial.json") : ""
+        path: Caching.aetherDir ? (Caching.aetherDir + "/assets/tutorial.json") : ""
         onLoaded: {
             try {
                 let data = JSON.parse(text().trim());
@@ -385,7 +385,7 @@ Item {
             easing.type: Easing.InQuart
         }
         ScriptAction {
-            script: Quickshell.execDetached(["bash", Caching.serpantinumDir + "/scripts/qs_manager.sh", "close"])
+            script: Quickshell.execDetached(["bash", Caching.aetherDir + "/scripts/qs_manager.sh", "close"])
         }
     }
 

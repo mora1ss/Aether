@@ -97,7 +97,7 @@
 - fix: launcher having a bad corner at the bottom
 - fix: dock evaluation warning
 - fix: Dock taking up mouse area clicking when in hidden mode
-- fix a local function call bug in serpantinumd
+- fix a local function call bug in aetherd
 - fix: make all dock settings hide when dock is disabled
 
 ### 2.1.3
@@ -120,7 +120,7 @@
 - style: make all of the settings have separate configuration boxes
 - fix: wallpaper picker recent wallpaper animation fixed
 - fix wallpaper dir not being properly set on install
-- fix: serpantinum not cleanly killing the quickshell process
+- fix: aether not cleanly killing the quickshell process
 - fix: a right corner in clipboard having a wrong target coordinate
 - fix sounds not having access to the config
 - Remove duplicate no-op lines in QR polygon parser (#253)
@@ -220,7 +220,7 @@
 - style: change the volume of the whoosh sound in the MusicPopup equalizer
 - feat: BlueLight singleton to ensure that bluelight applies on shell startup
 - fix: stale thumbnails in the music player due to asynchronious loading
-- fix: serpantinum --version flag to display version correctly on nix
+- fix: aether --version flag to display version correctly on nix
 - fix: make sure focus_daemon.py doesn't self-duplicate on reload and doesn't inflate the usage time
 - feat: change the default icon in grouped notificatoins in the NotificationBox to use the icon of the grouped notifications that it contains
 - fix(nix): add a ... to declare rev from flake.nix

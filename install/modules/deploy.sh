@@ -53,7 +53,7 @@ install_wallpapers() {
     local wallpaper_dir
     wallpaper_dir=$(get_wallpaper_dir)
     local wallpaper_repo="https://github.com/ilyamiro/shell-wallpapers.git"
-    local clone_dir="${XDG_CACHE_HOME:-"$HOME/.cache"}/serpantinum-wallpapers"
+    local clone_dir="${XDG_CACHE_HOME:-"$HOME/.cache"}/aether-wallpapers"
 
     mkdir -p "$wallpaper_dir"
 
@@ -249,7 +249,7 @@ deploy_package() {
     shift 5
     local COMPOSITORS=("$@")
 
-    local TARGET_BASE="$HOME/.local/share/serpantinum"
+    local TARGET_BASE="$HOME/.local/share/aether"
     local BIN_DIR="$HOME/.local/bin"
 
     local is_update=false
@@ -432,13 +432,13 @@ deploy_package() {
         fi
     fi
 
-    if [ -f "$TARGET_BASE/bin/serpantinum" ]; then
-        ln -sf "$TARGET_BASE/bin/serpantinum" "$BIN_DIR/serpantinum"
-        sudo ln -sf "$TARGET_BASE/bin/serpantinum" /usr/local/bin/serpantinum 2>/dev/null || true
+    if [ -f "$TARGET_BASE/bin/aether" ]; then
+        ln -sf "$TARGET_BASE/bin/aether" "$BIN_DIR/aether"
+        sudo ln -sf "$TARGET_BASE/bin/aether" /usr/local/bin/aether 2>/dev/null || true
     fi
 
-    if [ -f "$TARGET_BASE/bin/serpantinumd" ]; then
-        ln -sf "$TARGET_BASE/bin/serpantinumd" "$BIN_DIR/serpantinumd"
-        sudo ln -sf "$TARGET_BASE/bin/serpantinumd" /usr/local/bin/serpantinumd 2>/dev/null || true
+    if [ -f "$TARGET_BASE/bin/aetherd" ]; then
+        ln -sf "$TARGET_BASE/bin/aetherd" "$BIN_DIR/aetherd"
+        sudo ln -sf "$TARGET_BASE/bin/aetherd" /usr/local/bin/aetherd 2>/dev/null || true
     fi
 }

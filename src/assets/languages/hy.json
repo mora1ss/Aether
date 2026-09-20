@@ -1,7 +1,7 @@
 {
   "guide": {
     "about": {
-      "title": "Serpantinum",
+      "title": "Aether",
       "loading": "Բեռնվում է...",
       "unknown": "Անհայտ",
       "version_by": "v{version} • հեղինակ՝ {author}",
@@ -21,7 +21,7 @@
         "uptime": "Աշխատաժամանակ",
         "default_os": "Linux"
       },
-      "github_repo": "ilyamiro/serpantinum"
+      "github_repo": "mora1ss/aether"
     },
     "tabs": {
       "welcome": "Բարի գալուստ",
@@ -377,7 +377,7 @@
     "theme": {
       "font": {
         "title": "Տառատեսակ",
-        "desc": "Ընտրեք Serpantinum-ի լռելյայն տառատեսակը",
+        "desc": "Ընտրեք Aether-ի լռելյայն տառատեսակը",
         "select": "Ընտրել..."
       },
       "radius": {
@@ -851,7 +851,7 @@
     }
   },
   "start": {
-    "title": "Serpantinum",
+    "title": "Aether",
     "made_by": "Ստեղծել է @{author}",
     "welcome": "Բարի գալուստ",
     "tagline": "Աշխատասեղանի թաղանթ՝ ստեղծված",
@@ -986,7 +986,7 @@
     },
     "guide": {
       "name": "Կարգավորումներ",
-      "desc": "Serpantinum-ի կարգավորումներ"
+      "desc": "Aether-ի կարգավորումներ"
     },
     "calendar": {
       "name": "Օրացույց և ժամացույց",
@@ -1054,7 +1054,7 @@
     }
   },
   "cli": {
-    "usage": "Օգտագործում՝ serpantinum [command] [options...]",
+    "usage": "Օգտագործում՝ aether [command] [options...]",
     "description": "Աշխատասեղանի թաղանթ Wayland կոմպոզիտորների համար։",
     "commands": "Հրամաններ՝",
     "script_commands": "Սկրիպտի հրամաններ՝",
@@ -1067,23 +1067,23 @@
     "version_desc": "Ցուցադրել տարբերակի տվյալները և դուրս գալ",
     "help_desc": "Ցուցադրել այս օգնության հաղորդագրությունը և դուրս գալ",
     "examples": "Օրինակներ՝",
-    "daemon_stopped": "Serpantinum-ի սպասարկիչը կանգնեցված է։",
-    "starting_daemon": "Սպասարկիչը չի աշխատում։ serpantinumd-ը գործարկվում է հետնամասում...",
+    "daemon_stopped": "Aether-ի սպասարկիչը կանգնեցված է։",
+    "starting_daemon": "Սպասարկիչը չի աշխատում։ aetherd-ը գործարկվում է հետնամասում...",
     "error_missing_qml": "Սխալ՝ գործարկման թիրախը նշված չէ։",
-    "launch_usage": "Օգտագործում՝ serpantinum launch <start|widgetredactor> [args...]",
+    "launch_usage": "Օգտագործում՝ aether launch <start|widgetredactor> [args...]",
     "error_qml_not_found": "Սխալ՝ {DIR}-ում չհաջողվեց գտնել {NAME}.qml-ը",
     "error_shell_qml_not_found": "Սխալ՝ չհաջողվեց գտնել shell.qml-ի ուղին {DIR}-ում",
     "error_unknown_command": "Սխալ՝ անհայտ հրաման՝ «{CMD}»։",
     "error_unknown_target": "Սխալ՝ անհայտ թիրախ՝ «{TARGET}»։",
     "launch_help": {
-      "usage": "Օգտագործում՝ serpantinum launch <start|widgetredactor> [arguments...]",
+      "usage": "Օգտագործում՝ aether launch <start|widgetredactor> [arguments...]",
       "description": "Առանձին բաղադրիչներն անմիջապես գործարկել runner ռեժիմով։",
       "available_targets": "Հասանելի թիրախներ՝",
       "target_start": "Գործարկել սկզբնական կարգավորման միջերեսը",
       "target_widgetredactor": "Գործարկել աշխատասեղանի վիջեթների խմբագրիչը"
     },
     "msg_help": {
-      "usage": "Օգտագործում՝ serpantinum msg <command|workspace> [arguments...]",
+      "usage": "Օգտագործում՝ aether msg <command|workspace> [arguments...]",
       "description": "Անմիջապես ուղարկել դասավորության, աշխատատարածքի և պատուհանների կառավարման հաղորդագրություններ։",
       "available_commands": "Հասանելի հաղորդագրություններ՝",
       "cmd_workspace": "Անցնել <num> աշխատատարածքին (ակտիվ պատուհանն ուղարկելու համար ավելացրեք 'move')",
@@ -1092,7 +1092,7 @@
       "cmd_close": "Փակել թաղանթի ցանկացած ակտիվ վերադիր շերտ"
     },
     "ipc_help": {
-      "usage": "Օգտագործում՝ serpantinum ipc call <target> <method> [arguments...]",
+      "usage": "Օգտագործում՝ aether ipc call <target> <method> [arguments...]",
       "description": "IPC կանչն անմիջապես ուղարկել աշխատող Quickshell նմուշին։"
     },
     "scripts": {
@@ -1113,11 +1113,11 @@
   },
   "daemon": {
     "already_running": "Սպասարկիչն արդեն աշխատում է։ Դուրս է գալիս...",
-    "shutting_down": "Serpantinum-ի սպասարկիչն անջատվում է...",
-    "launching": "Serpantinum-ի սպասարկիչը գործարկվում է...",
+    "shutting_down": "Aether-ի սպասարկիչն անջատվում է...",
+    "launching": "Aether-ի սպասարկիչը գործարկվում է...",
     "cli": {
-      "usage": "Օգտագործում՝ serpantinumd <command> [options...]",
-      "description": "Serpantinum աշխատասեղանի թաղանթի հետնամասային սպասարկիչ։",
+      "usage": "Օգտագործում՝ aetherd <command> [options...]",
+      "description": "Aether աշխատասեղանի թաղանթի հետնամասային սպասարկիչ։",
       "commands": "Հրամաններ՝",
       "cmd_start": "Գործարկել սպասարկիչն ու հետնամասային աշխատիչները",
       "cmd_stop": "Կանգնեցնել աշխատող սպասարկիչը",
@@ -1126,9 +1126,9 @@
       "opt_verbose": "Միացնել մանրամասն ելքային գրանցումը",
       "opt_version": "Ցուցադրել տարբերակի տվյալները և դուրս գալ",
       "opt_help": "Ցուցադրել այս օգնության հաղորդագրությունը և դուրս գալ",
-      "stopped": "Serpantinum-ի սպասարկիչը կանգնեցված է։",
-      "status_running": "Serpantinum-ի սպասարկիչն աշխատում է (PID՝ {PID})։",
-      "status_stopped": "Serpantinum-ի սպասարկիչը չի աշխատում։",
+      "stopped": "Aether-ի սպասարկիչը կանգնեցված է։",
+      "status_running": "Aether-ի սպասարկիչն աշխատում է (PID՝ {PID})։",
+      "status_stopped": "Aether-ի սպասարկիչը չի աշխատում։",
       "unknown_arg": "Անհայտ փաստարկ՝ {ARG}"
     }
   },
@@ -1143,7 +1143,7 @@
     },
     "os": {
       "error_root": "Սխալ՝ այս սկրիպտը մի գործարկեք անմիջապես root/sudo-ով։ Գործարկեք սովորական օգտատիրոջ անունից։",
-      "error_unsupported": "Չաջակցվող ՕՀ ({os})։ Serpantinum-ը խստորեն աջակցում է Arch Linux-ին և դրա ածանցյալներին։",
+      "error_unsupported": "Չաջակցվող ՕՀ ({os})։ Aether-ը խստորեն աջակցում է Arch Linux-ին և դրա ածանցյալներին։",
       "error_not_found": "Չհաջողվեց որոշել ՕՀ-ն։ /etc/os-release-ը չի գտնվել։",
       "unknown_cpu": "Անհայտ CPU",
       "unknown_gpu": "Անհայտ / վիրտուալ մեքենա",
@@ -1199,9 +1199,9 @@
       "tagline": "Աշխատասեղանի թաղանթ՝ ստեղծված ձեզ համար",
       "support_creator": "Աջակցեք ստեղծողին՝",
       "buy_coffee": "Եթե ձեզ դուր է գալիս այս նախագիծը, կարող եք ինձ սուրճ հյուրասիրել։",
-      "installed_success": "✔ Serpantinum {ver} ({commit})-ը հաջողությամբ տեղադրվեց։",
+      "installed_success": "✔ Aether {ver} ({commit})-ը հաջողությամբ տեղադրվեց։",
       "failed_packages": "Հետևյալ փաթեթների տեղադրման ժամանակ սխալներ առաջացան՝",
-      "restart_prompt": "Սկսելու համար վերագործարկեք կոմպոզիտորը կամ կատարեք 'serpantinumd start' հրամանը։",
+      "restart_prompt": "Սկսելու համար վերագործարկեք կոմպոզիտորը կամ կատարեք 'aetherd start' հրամանը։",
       "ask_reboot": "Ցանկանո՞ւմ եք վերագործարկել։ [y/n] "
     },
     "deps": {

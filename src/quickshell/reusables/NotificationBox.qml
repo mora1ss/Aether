@@ -61,7 +61,7 @@ Item {
                 }
             }
         }
-        Quickshell.execDetached(["serpantinum", "ipc", "call", "main", "clearNotifications"]);
+        Quickshell.execDetached(["aether", "ipc", "call", "main", "clearNotifications"]);
     }
 
     Timer {
@@ -222,7 +222,7 @@ Item {
                         size: root.emptyGraphicSize
                         cornerRadius: root.s(0)
                         imageRadius: root.s(0)
-                        source: Caching.serpantinumDir ? ("file://" + Caching.serpantinumDir + "/assets/pushy.gif") : Qt.resolvedUrl("../../assets/pushy.gif")
+                        source: Caching.aetherDir ? ("file://" + Caching.aetherDir + "/assets/pushy.gif") : Qt.resolvedUrl("../../assets/pushy.gif")
                         isGif: true
                         playing: true
                         fillMode: Image.PreserveAspectFit
@@ -293,7 +293,7 @@ Item {
                         let app = (appn || "").toLowerCase().trim();
                         if (app === "weather") return "weather";
                         if (app === "screenshot" || app === "screen recorder") return "screenshot";
-                        if (app === "update" || app === "updater" || app === "serpantinum updater") return "update";
+                        if (app === "update" || app === "updater" || app === "aether updater") return "update";
                         return "default";
                     }
 
@@ -433,7 +433,7 @@ Item {
                             let app = appn.toLowerCase().trim();
                             if (app === "weather") return "../notifications/types/Weather.qml";
                             if (app === "screenshot" || app === "screen recorder") return "../notifications/types/Screenshot.qml";
-                            if (app === "update" || app === "updater" || app === "serpantinum updater") return "../notifications/types/Update.qml";
+                            if (app === "update" || app === "updater" || app === "aether updater") return "../notifications/types/Update.qml";
                             return "../notifications/types/Default.qml";
                         }
                         onLoaded: {
@@ -917,7 +917,7 @@ Item {
                                                     let app = appn.toLowerCase().trim();
                                                     if (app === "weather") return "../notifications/types/Weather.qml";
                                                     if (app === "screenshot" || app === "screen recorder") return "../notifications/types/Screenshot.qml";
-                                                    if (app === "update" || app === "updater" || app === "serpantinum updater") return "../notifications/types/Update.qml";
+                                                    if (app === "update" || app === "updater" || app === "aether updater") return "../notifications/types/Update.qml";
                                                     return "../notifications/types/Default.qml";
                                                 }
 

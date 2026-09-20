@@ -261,7 +261,7 @@ Scope {
 
     Process {
         id: suspendProcess
-        command: ["bash", Caching.serpantinumDir + "/scripts/system/suspend.sh"]
+        command: ["bash", Caching.aetherDir + "/scripts/system/suspend.sh"]
         onExited: {
             SystemInfo.fetch();
             root.updateDeInfo();
@@ -275,12 +275,12 @@ Scope {
 
     Process {
         id: poweroffProcess
-        command: ["bash", Caching.serpantinumDir + "/scripts/system/poweroff.sh"]
+        command: ["bash", Caching.aetherDir + "/scripts/system/poweroff.sh"]
     }
 
     Process {
         id: reloadProcess
-        command: ["bash", Caching.serpantinumDir + "/scripts/system/reboot.sh"]
+        command: ["bash", Caching.aetherDir + "/scripts/system/reboot.sh"]
     }
 
     WlSessionLock {

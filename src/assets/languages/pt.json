@@ -1,7 +1,7 @@
 {
   "guide": {
     "about": {
-      "title": "Serpantinum",
+      "title": "Aether",
       "loading": "Carregando...",
       "unknown": "Desconhecido",
       "version_by": "v{version} • por {author}",
@@ -21,7 +21,7 @@
         "uptime": "Tempo ligado",
         "default_os": "Linux"
       },
-      "github_repo": "ilyamiro/serpantinum"
+      "github_repo": "mora1ss/aether"
     },
     "tabs": {
       "welcome": "Boas-vindas",
@@ -377,7 +377,7 @@
     "theme": {
       "font": {
         "title": "Fonte",
-        "desc": "Escolha a padrão usada pelo serpantinum",
+        "desc": "Escolha a padrão usada pelo aether",
         "select": "Selecionar..."
       },
       "radius": {
@@ -851,7 +851,7 @@
     }
   },
   "start": {
-    "title": "Serpantinum",
+    "title": "Aether",
     "made_by": "Feito por @{author}",
     "welcome": "Boas-vindas",
     "tagline": "Um shell de desktop feito para",
@@ -986,7 +986,7 @@
     },
     "guide": {
       "name": "Configurações",
-      "desc": "Configurações do Serpantinum"
+      "desc": "Configurações do Aether"
     },
     "calendar": {
       "name": "Calendário e relógio",
@@ -1054,7 +1054,7 @@
     }
   },
   "cli": {
-    "usage": "Uso: serpantinum [comando] [opções...]",
+    "usage": "Uso: aether [comando] [opções...]",
     "description": "Um shell de desktop para compositores wayland.",
     "commands": "Comandos:",
     "script_commands": "Comandos de script:",
@@ -1067,23 +1067,23 @@
     "version_desc": "Mostra informações de versão e sai",
     "help_desc": "Mostra esta mensagem de ajuda e sai",
     "examples": "Exemplos:",
-    "daemon_stopped": "Daemon do serpantinum parado.",
-    "starting_daemon": "Daemon fora do ar. Iniciando serpantinumd em segundo plano...",
+    "daemon_stopped": "Daemon do aether parado.",
+    "starting_daemon": "Daemon fora do ar. Iniciando aetherd em segundo plano...",
     "error_missing_qml": "Erro: alvo a iniciar não informado.",
-    "launch_usage": "Uso: serpantinum launch <start|widgetredactor> [args...]",
+    "launch_usage": "Uso: aether launch <start|widgetredactor> [args...]",
     "error_qml_not_found": "Erro: não foi possível resolver {NAME}.qml em {DIR}",
     "error_shell_qml_not_found": "Erro: não foi possível resolver o caminho de shell.qml em {DIR}",
     "error_unknown_command": "Erro: comando desconhecido '{CMD}'.",
     "error_unknown_target": "Erro: alvo desconhecido '{TARGET}'.",
     "launch_help": {
-      "usage": "Uso: serpantinum launch <start|widgetredactor> [argumentos...]",
+      "usage": "Uso: aether launch <start|widgetredactor> [argumentos...]",
       "description": "Inicia componentes avulsos direto em modo runner.",
       "available_targets": "Alvos disponíveis:",
       "target_start": "Inicia a interface de configuração inicial",
       "target_widgetredactor": "Inicia o editor de widgets do desktop"
     },
     "msg_help": {
-      "usage": "Uso: serpantinum msg <comando|workspace> [argumentos...]",
+      "usage": "Uso: aether msg <comando|workspace> [argumentos...]",
       "description": "Envia mensagens de layout, workspace e gerenciamento de janelas diretamente.",
       "available_commands": "Mensagens disponíveis:",
       "cmd_workspace": "Vai para o workspace <num> (adicione 'move' para levar a janela ativa)",
@@ -1092,7 +1092,7 @@
       "cmd_close": "Fecha qualquer overlay ativo do shell"
     },
     "ipc_help": {
-      "usage": "Uso: serpantinum ipc call <alvo> <método> [argumentos...]",
+      "usage": "Uso: aether ipc call <alvo> <método> [argumentos...]",
       "description": "Envia uma chamada IPC direto para a instância quickshell em execução."
     },
     "scripts": {
@@ -1113,11 +1113,11 @@
   },
   "daemon": {
     "already_running": "O daemon já está em execução. Saindo...",
-    "shutting_down": "Encerrando o daemon do serpantinum...",
-    "launching": "Iniciando o daemon do serpantinum...",
+    "shutting_down": "Encerrando o daemon do aether...",
+    "launching": "Iniciando o daemon do aether...",
     "cli": {
-      "usage": "Uso: serpantinumd <comando> [opções...]",
-      "description": "Daemon de serviço em segundo plano para o shell serpantinum.",
+      "usage": "Uso: aetherd <comando> [opções...]",
+      "description": "Daemon de serviço em segundo plano para o shell aether.",
       "commands": "Comandos:",
       "cmd_start": "Inicia o serviço do daemon e os workers em segundo plano",
       "cmd_stop": "Para o serviço do daemon em execução",
@@ -1126,9 +1126,9 @@
       "opt_verbose": "Ativa registro detalhado",
       "opt_version": "Mostra informações de versão e sai",
       "opt_help": "Mostra esta mensagem de ajuda e sai",
-      "stopped": "Daemon do serpantinum parado.",
-      "status_running": "Daemon do serpantinum em execução (PID: {PID}).",
-      "status_stopped": "O daemon do serpantinum não está em execução.",
+      "stopped": "Daemon do aether parado.",
+      "status_running": "Daemon do aether em execução (PID: {PID}).",
+      "status_stopped": "O daemon do aether não está em execução.",
       "unknown_arg": "Argumento desconhecido: {ARG}"
     }
   },
@@ -1143,7 +1143,7 @@
     },
     "os": {
       "error_root": "Erro: não execute este script direto como root/sudo. Execute como usuário normal.",
-      "error_unsupported": "SO não suportado ({os}). O Serpantinum suporta apenas arch linux e derivados.",
+      "error_unsupported": "SO não suportado ({os}). O Aether suporta apenas arch linux e derivados.",
       "error_not_found": "Não foi possível detectar o SO. /etc/os-release não encontrado.",
       "unknown_cpu": "CPU desconhecida",
       "unknown_gpu": "GPU desconhecida / máquina virtual",
@@ -1199,9 +1199,9 @@
       "tagline": "Um shell de desktop feito para você",
       "support_creator": "Apoie o criador:",
       "buy_coffee": "Se curte este projeto, considere me pagar um café!",
-      "installed_success": "✔ Serpantinum {ver} ({commit}) instalado com sucesso.",
+      "installed_success": "✔ Aether {ver} ({commit}) instalado com sucesso.",
       "failed_packages": "Os seguintes pacotes tiveram erro na instalação:",
-      "restart_prompt": "Reinicie o compositor ou execute 'serpantinumd start' para começar.",
+      "restart_prompt": "Reinicie o compositor ou execute 'aetherd start' para começar.",
       "ask_reboot": "Deseja reiniciar? [y/n] "
     },
     "deps": {

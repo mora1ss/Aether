@@ -1,7 +1,7 @@
 {
   "guide": {
     "about": {
-      "title": "Serpantinum",
+      "title": "Aether",
       "loading": "Loading...",
       "unknown": "Unknown",
       "version_by": "v{version} • by {author}",
@@ -21,7 +21,7 @@
         "uptime": "Uptime",
         "default_os": "Linux"
       },
-      "github_repo": "ilyamiro/serpantinum"
+      "github_repo": "mora1ss/aether"
     },
     "tabs": {
       "welcome": "Welcome",
@@ -377,7 +377,7 @@
     "theme": {
       "font": {
         "title": "Font",
-        "desc": "Choose the default used by serpantinum",
+        "desc": "Choose the default used by aether",
         "select": "Select..."
       },
       "radius": {
@@ -851,7 +851,7 @@
     }
   },
   "start": {
-    "title": "Serpantinum",
+    "title": "Aether",
     "made_by": "Made by @{author}",
     "welcome": "Welcome",
     "tagline": "A desktop shell built for",
@@ -986,7 +986,7 @@
     },
     "guide": {
       "name": "Settings",
-      "desc": "Serpantinum settings"
+      "desc": "Aether settings"
     },
     "calendar": {
       "name": "Calendar & clock",
@@ -1051,7 +1051,7 @@
     }
   },
   "cli": {
-    "usage": "Usage: serpantinum [command] [options...]",
+    "usage": "Usage: aether [command] [options...]",
     "description": "A desktop shell for wayland compositors.",
     "commands": "Commands:",
     "script_commands": "Script commands:",
@@ -1064,23 +1064,23 @@
     "version_desc": "Display version information and exit",
     "help_desc": "Show this help message and exit",
     "examples": "Examples:",
-    "daemon_stopped": "Serpantinum daemon stopped.",
-    "starting_daemon": "Daemon not running. Starting serpantinumd in the background...",
+    "daemon_stopped": "Aether daemon stopped.",
+    "starting_daemon": "Daemon not running. Starting aetherd in the background...",
     "error_missing_qml": "Error: missing target to launch.",
-    "launch_usage": "Usage: serpantinum launch <start|widgetredactor> [args...]",
+    "launch_usage": "Usage: aether launch <start|widgetredactor> [args...]",
     "error_qml_not_found": "Error: could not resolve {NAME}.qml in {DIR}",
     "error_shell_qml_not_found": "Error: could not resolve path to shell.qml in {DIR}",
     "error_unknown_command": "Error: unknown command '{CMD}'.",
     "error_unknown_target": "Error: unknown target '{TARGET}'.",
     "launch_help": {
-      "usage": "Usage: serpantinum launch <start|widgetredactor> [arguments...]",
+      "usage": "Usage: aether launch <start|widgetredactor> [arguments...]",
       "description": "Launch standalone components directly in runner mode.",
       "available_targets": "Available targets:",
       "target_start": "Launch the start setup interface",
       "target_widgetredactor": "Launch the desktop widget editor interface"
     },
     "msg_help": {
-      "usage": "Usage: serpantinum msg <command|workspace> [arguments...]",
+      "usage": "Usage: aether msg <command|workspace> [arguments...]",
       "description": "Send layout, workspace, and window management messages directly.",
       "available_commands": "Available messages:",
       "cmd_workspace": "Switch to workspace <num> (append 'move' to send active window)",
@@ -1089,7 +1089,7 @@
       "cmd_close": "Close any active shell overlay"
     },
     "ipc_help": {
-      "usage": "Usage: serpantinum ipc call <target> <method> [arguments...]",
+      "usage": "Usage: aether ipc call <target> <method> [arguments...]",
       "description": "Send an IPC call directly to the running quickshell instance."
     },
     "scripts": {
@@ -1110,11 +1110,11 @@
   },
   "daemon": {
     "already_running": "Daemon is already running. Exiting...",
-    "shutting_down": "Shutting down serpantinum daemon...",
-    "launching": "Launching serpantinum daemon...",
+    "shutting_down": "Shutting down aether daemon...",
+    "launching": "Launching aether daemon...",
     "cli": {
-      "usage": "Usage: serpantinumd <command> [options...]",
-      "description": "Background service daemon for serpantinum desktop shell.",
+      "usage": "Usage: aetherd <command> [options...]",
+      "description": "Background service daemon for aether desktop shell.",
       "commands": "Commands:",
       "cmd_start": "Start the daemon service and launch background workers",
       "cmd_stop": "Stop the running daemon service",
@@ -1123,9 +1123,9 @@
       "opt_verbose": "Enable verbose output logging",
       "opt_version": "Show version information and exit",
       "opt_help": "Show this help message and exit",
-      "stopped": "Serpantinum daemon stopped.",
-      "status_running": "Serpantinum daemon is running (PID: {PID}).",
-      "status_stopped": "Serpantinum daemon is not running.",
+      "stopped": "Aether daemon stopped.",
+      "status_running": "Aether daemon is running (PID: {PID}).",
+      "status_stopped": "Aether daemon is not running.",
       "unknown_arg": "Unknown argument: {ARG}"
     }
   },
@@ -1140,7 +1140,7 @@
     },
     "os": {
       "error_root": "Error: Do not run this script directly with root/sudo. Run as normal user.",
-      "error_unsupported": "Unsupported OS ({os}). Serpantinum strictly supports arch linux and derivatives.",
+      "error_unsupported": "Unsupported OS ({os}). Aether strictly supports arch linux and derivatives.",
       "error_not_found": "Cannot detect OS. /etc/os-release not found.",
       "unknown_cpu": "Unknown CPU",
       "unknown_gpu": "Unknown / virtual machine",
@@ -1196,9 +1196,9 @@
       "tagline": "A desktop shell built for you",
       "support_creator": "Support the creator:",
       "buy_coffee": "If you enjoy this project, consider buying me a coffee!",
-      "installed_success": "✔ Serpantinum {ver} ({commit}) installed successfully.",
+      "installed_success": "✔ Aether {ver} ({commit}) installed successfully.",
       "failed_packages": "The following packages encountered errors during installation:",
-      "restart_prompt": "Restart your compositor or run 'serpantinumd start' to begin.",
+      "restart_prompt": "Restart your compositor or run 'aetherd start' to begin.",
       "ask_reboot": "Do you want to restart? [y/n] "
     },
     "deps": {

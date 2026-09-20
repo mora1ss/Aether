@@ -5,10 +5,10 @@ import sys
 import time
 import urllib.request
 
-REPO = "ilyamiro/serpantinum"
+REPO = "mora1ss/aether"
 DEFAULT_VER = "2.0.0"
 
-state_dir = os.path.expanduser("~/.local/state/serpantinum")
+state_dir = os.path.expanduser("~/.local/state/aether")
 if "--state-dir" in sys.argv:
     try:
         idx = sys.argv.index("--state-dir")
@@ -52,7 +52,7 @@ def get_local_ver():
         try:
             with open(state_file, "r") as f:
                 for line in f:
-                    if line.startswith("SERPANTINUM_VERSION="):
+                    if line.startswith("AETHER_VERSION="):
                         v = line.split("=", 1)[1].strip().strip('"').strip("'")
                         if v:
                             return v

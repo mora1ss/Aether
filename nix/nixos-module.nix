@@ -3,11 +3,11 @@
 with lib;
 
 let
-  cfg = config.programs.serpantinum;
+  cfg = config.programs.aether;
 in
 {
-  options.programs.serpantinum = {
-    enable = mkEnableOption "system-level support for the Serpantinum desktop shell";
+  options.programs.aether = {
+    enable = mkEnableOption "system-level support for the Aether desktop shell";
   };
 
   config = mkIf cfg.enable {

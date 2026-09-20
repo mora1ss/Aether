@@ -1,7 +1,7 @@
 {
   "guide": {
     "about": {
-      "title": "Serpantinum",
+      "title": "Aether",
       "loading": "Загрузка...",
       "unknown": "Неизвестно",
       "version_by": "v{version} • от {author}",
@@ -21,7 +21,7 @@
         "uptime": "Время работы",
         "default_os": "Linux"
       },
-      "github_repo": "ilyamiro/serpantinum"
+      "github_repo": "mora1ss/aether"
     },
     "tabs": {
       "welcome": "Добро пожаловать",
@@ -378,7 +378,7 @@
     "theme": {
       "font": {
         "title": "Шрифт",
-        "desc": "Выберите шрифт по умолчанию для serpantinum",
+        "desc": "Выберите шрифт по умолчанию для aether",
         "select": "Выбрать..."
       },
       "radius": {
@@ -895,7 +895,7 @@
     }
   },
   "start": {
-    "title": "Serpantinum",
+    "title": "Aether",
     "made_by": "Создано @{author}",
     "welcome": "Добро пожаловать",
     "tagline": "Оболочка рабочего стола, созданная для",
@@ -1030,7 +1030,7 @@
     },
     "guide": {
       "name": "Настройки",
-      "desc": "Настройки serpantinum"
+      "desc": "Настройки aether"
     },
     "calendar": {
       "name": "Календарь и часы",
@@ -1098,7 +1098,7 @@
     }
   },
   "cli": {
-    "usage": "Использование: serpantinum [команда] [опции...]",
+    "usage": "Использование: aether [команда] [опции...]",
     "description": "Оболочка рабочего стола для композиторов wayland.",
     "commands": "Команды:",
     "script_commands": "Команды скриптов:",
@@ -1111,23 +1111,23 @@
     "version_desc": "Показать информацию о версии и выйти",
     "help_desc": "Показать эту справку и выйти",
     "examples": "Примеры:",
-    "daemon_stopped": "Служба serpantinum остановлена.",
-    "starting_daemon": "Служба не запущена. Запуск serpantinumd в фоновом режиме...",
+    "daemon_stopped": "Служба aether остановлена.",
+    "starting_daemon": "Служба не запущена. Запуск aetherd в фоновом режиме...",
     "error_missing_qml": "Ошибка: не указана цель для запуска.",
-    "launch_usage": "Использование: serpantinum launch <start|widgetredactor> [аргументы...]",
+    "launch_usage": "Использование: aether launch <start|widgetredactor> [аргументы...]",
     "error_qml_not_found": "Ошибка: не удалось найти {NAME}.qml в {DIR}",
     "error_shell_qml_not_found": "Ошибка: не удалось определить путь к shell.qml в {DIR}",
     "error_unknown_command": "Ошибка: неизвестная команда '{CMD}'.",
     "error_unknown_target": "Ошибка: неизвестная цель '{TARGET}'.",
     "launch_help": {
-      "usage": "Использование: serpantinum launch <start|widgetredactor> [аргументы...]",
+      "usage": "Использование: aether launch <start|widgetredactor> [аргументы...]",
       "description": "Запуск автономных компонентов напрямую в режиме runner.",
       "available_targets": "Доступные цели:",
       "target_start": "Запустить интерфейс начальной настройки",
       "target_widgetredactor": "Запустить интерфейс редактора виджетов рабочего стола"
     },
     "msg_help": {
-      "usage": "Использование: serpantinum msg <команда|рабочеепространство> [аргументы...]",
+      "usage": "Использование: aether msg <команда|рабочеепространство> [аргументы...]",
       "description": "Отправка сообщений разметки, рабочих пространств и управления окнами напрямую.",
       "available_commands": "Доступные сообщения:",
       "cmd_workspace": "Переключиться на рабочее пространство <номер> (добавьте 'move', чтобы переместить активное окно)",
@@ -1136,7 +1136,7 @@
       "cmd_close": "Закрыть любой активный оверлей оболочки"
     },
     "ipc_help": {
-      "usage": "Использование: serpantinum ipc call <цель> <метод> [аргументы...]",
+      "usage": "Использование: aether ipc call <цель> <метод> [аргументы...]",
       "description": "Отправить вызов IPC напрямую запущенному экземпляру quickshell."
     },
     "scripts": {
@@ -1157,11 +1157,11 @@
   },
   "daemon": {
     "already_running": "Служба уже запущена. Выход...",
-    "shutting_down": "Завершение работы службы serpantinum...",
-    "launching": "Запуск службы serpantinum...",
+    "shutting_down": "Завершение работы службы aether...",
+    "launching": "Запуск службы aether...",
     "cli": {
-      "usage": "Использование: serpantinumd <команда> [опции...]",
-      "description": "Фоновая служба для оболочки рабочего стола serpantinum.",
+      "usage": "Использование: aetherd <команда> [опции...]",
+      "description": "Фоновая служба для оболочки рабочего стола aether.",
       "commands": "Команды:",
       "cmd_start": "Запустить службу и фоновые процессы",
       "cmd_stop": "Остановить работающую службу",
@@ -1170,9 +1170,9 @@
       "opt_verbose": "Включить подробный вывод логов",
       "opt_version": "Показать информацию о версии и выйти",
       "opt_help": "Показать эту справку и выйти",
-      "stopped": "Служба serpantinum остановлена.",
-      "status_running": "Служба serpantinum запущена (PID: {PID}).",
-      "status_stopped": "Служба serpantinum не запущена.",
+      "stopped": "Служба aether остановлена.",
+      "status_running": "Служба aether запущена (PID: {PID}).",
+      "status_stopped": "Служба aether не запущена.",
       "unknown_arg": "Неизвестный аргумент: {ARG}"
     }
   },
@@ -1187,7 +1187,7 @@
     },
     "os": {
       "error_root": "Ошибка: не запускайте этот скрипт от root/sudo. Запустите от обычного пользователя.",
-      "error_unsupported": "Неподдерживаемая ОС ({os}). Serpantinum поддерживает только arch linux и его производные.",
+      "error_unsupported": "Неподдерживаемая ОС ({os}). Aether поддерживает только arch linux и его производные.",
       "error_not_found": "Не удалось определить ОС. /etc/os-release не найден.",
       "unknown_cpu": "Неизвестный процессор",
       "unknown_gpu": "Неизвестно / виртуальная машина",
@@ -1243,9 +1243,9 @@
       "tagline": "Оболочка рабочего стола, созданная для вас",
       "support_creator": "Поддержать автора:",
       "buy_coffee": "Если вам нравится этот проект, угостите автора кофе!",
-      "installed_success": "✔ Serpantinum {ver} ({commit}) успешно установлен.",
+      "installed_success": "✔ Aether {ver} ({commit}) успешно установлен.",
       "failed_packages": "При установке следующих пакетов возникли ошибки:",
-      "restart_prompt": "Перезапустите композитор или выполните 'serpantinumd start' для начала работы.",
+      "restart_prompt": "Перезапустите композитор или выполните 'aetherd start' для начала работы.",
       "ask_reboot": "Перезагрузить систему сейчас? [y/n] "
     },
     "deps": {

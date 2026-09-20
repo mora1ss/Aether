@@ -55,7 +55,7 @@
 , ...
 }:
 let
-  pname = "serpantinum";
+  pname = "aether";
   version = lib.strings.trim (builtins.readFile ../version.txt);
   pythonEnv = python3.withPackages (ps: [ ps.websockets ]);
   pathDeps = [
@@ -136,27 +136,27 @@ stdenv.mkDerivation (finalAttrs: {
     cp -r config "$out/share/${finalAttrs.pname}/config"
     cp version.txt "$out/share/${finalAttrs.pname}/version.txt"
     find "$out/share/${finalAttrs.pname}" -type f \( -name "*.sh" -o -name "*.py" \) -exec chmod +x {} +
-    install -Dm755 bin/serpantinum  "$out/bin/.serpantinum-wrapped"
-    install -Dm755 bin/serpantinumd "$out/bin/.serpantinumd-wrapped"
+    install -Dm755 bin/aether  "$out/bin/.aether-wrapped"
+    install -Dm755 bin/aetherd "$out/bin/.aetherd-wrapped"
     runHook postInstall
   '';
   postFixup = ''
-    for bin in serpantinum serpantinumd; do
+    for bin in aether aetherd; do
       makeWrapper "$out/bin/.$bin-wrapped" "$out/bin/$bin" \
         "''${qtWrapperArgs[@]}" \
         --prefix QML2_IMPORT_PATH : "${qmlImportPath}" \
         --prefix QT_PLUGIN_PATH : "${qtPluginPath}" \
-        --set SERPANTINUM_DIR "$out/share/${finalAttrs.pname}" \
-        --set SERPANTINUM_VERSION "${finalAttrs.version}" \
+        --set AETHER_DIR "$out/share/${finalAttrs.pname}" \
+        --set AETHER_VERSION "${finalAttrs.version}" \
         --prefix PATH : "${lib.makeBinPath pathDeps}"
     done
   '';
   passthru = { inherit pathDeps qtDeps pythonEnv; };
   meta = with lib; {
     description = "A desktop shell built for YOU";
-    homepage = "https://github.com/ilyamiro/serpantinum";
+    homepage = "https://github.com/mora1ss/aether";
     license = licenses.mit;
     platforms = platforms.linux;
-    mainProgram = "serpantinum";
+    mainProgram = "aether";
   };
 })

@@ -1,12 +1,12 @@
-CONFIG_DIR="$HOME/.config/serpantinum"
+CONFIG_DIR="$HOME/.config/aether"
 CONFIG_FILE="$CONFIG_DIR/settings.json"
 
-init_serpantinum_config() {
+init_aether_config() {
     local project_root="$1"
     local wallpaper_dir="$2"
     local install_state="$3"
     local is_reinstall="$4"
-    local template_json="$project_root/config/serpantinum/settings.json"
+    local template_json="$project_root/config/aether/settings.json"
     local script_path="$project_root/src/scripts/location.sh"
 
     if [[ "$install_state" == "current" && "$is_reinstall" != "true" ]]; then
@@ -46,8 +46,8 @@ init_serpantinum_config() {
     if [[ "$is_reinstall" == "true" || "$install_state" == "fresh" || "$install_state" == "legacy" ]]; then
         if [ -f "$script_path" ]; then
             bash "$script_path" --refresh >/dev/null 2>&1 || true
-        elif [ -f "$HOME/.local/share/serpantinum/src/scripts/location.sh" ]; then
-            bash "$HOME/.local/share/serpantinum/src/scripts/location.sh" --refresh >/dev/null 2>&1 || true
+        elif [ -f "$HOME/.local/share/aether/src/scripts/location.sh" ]; then
+            bash "$HOME/.local/share/aether/src/scripts/location.sh" --refresh >/dev/null 2>&1 || true
         fi
     fi
 }

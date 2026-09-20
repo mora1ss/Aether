@@ -10,7 +10,7 @@ C_YELLOW=$'\e[33m'
 C_RED=$'\e[31m'
 C_MAGENTA=$'\e[35m'
 
-ENABLE_TELEMETRY=true
+ENABLE_TELEMETRY=false
 INSTALL_FULL_WALLPAPERS=true
 SELECTED_COMPOSITORS=()
 DETECTED_COMPOSITOR_LABEL=""
@@ -102,9 +102,9 @@ init_compositor_detection() {
     if [ -n "$running" ]; then
         SELECTED_COMPOSITORS=("$running")
         DETECTED_COMPOSITOR_LABEL="$running"
-    elif [ -f "$HOME/.local/state/serpantinum/version" ]; then
+    elif [ -f "$HOME/.local/state/aether/version" ]; then
         local saved_comps
-        saved_comps=$(awk -F= '/^SELECTED_COMPOSITORS=/{gsub(/"/, "", $2); print $2}' "$HOME/.local/state/serpantinum/version" 2>/dev/null || true)
+        saved_comps=$(awk -F= '/^SELECTED_COMPOSITORS=/{gsub(/"/, "", $2); print $2}' "$HOME/.local/state/aether/version" 2>/dev/null || true)
         if [ -n "$saved_comps" ]; then
             read -r -a SELECTED_COMPOSITORS <<< "$saved_comps"
             DETECTED_COMPOSITOR_LABEL="$(IFS=, ; echo "${SELECTED_COMPOSITORS[*]}")"
@@ -130,27 +130,20 @@ draw_banner() {
     clear
     printf "%s%s" "$BOLD" "$C_CYAN"
     cat << "EOF"
-███████╗███████╗██████╗ ██████╗  █████╗ ███╗   ██╗████████╗██╗███╗   ██╗██╗   ██╗███╗   ███╗
-██╔════╝██╔════╝██╔══██╗██╔══██╗██╔══██╗████╗  ██║╚══██╔══╝██║████╗  ██║██║   ██║████╗ ████║
-███████╗█████╗  ██████╔╝██████╔╝███████║██╔██╗ ██║   ██║   ██║██╔██╗ ██║██║   ██║██╔████╔██║
-╚════██║██╔══╝  ██╔══██╗██╔═══╝ ██╔══██║██║╚██╗██║   ██║   ██║██║╚██╗██║██║   ██║██║╚██╔╝██║
-███████║███████╗██║  ██║██║     ██║  ██║██║ ╚████║   ██║   ██║██║ ╚████║╚██████╔╝██║ ╚═╝ ██║
-╚══════╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝
+ █████╗ ███████╗████████╗██╗  ██╗███████╗██████╗
+██╔══██╗██╔════╝╚══██╔══╝██║  ██║██╔════╝██╔══██╗
+███████║█████╗     ██║   ███████║█████╗  ██████╔╝
+██╔══██║██╔══╝     ██║   ██╔══██║██╔══╝  ██╔══██╗
+██║  ██║███████╗   ██║   ██║  ██║███████╗██║  ██║
+╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
 EOF
     printf "%s\n" "$RESET"
 
     local OSC8_GH=$'\e]8;;https://github.com/'"${REPO_SLUG}"$'\a'
-    local OSC8_TW=$'\e]8;;https://twitter.com/ilyamirox\a'
-    local OSC8_RD=$'\e]8;;https://reddit.com/u/ilyamiro1\a'
-    local OSC8_TG=$'\e]8;;https://t.me/stewart_github\a'
-    local OSC8_KF=$'\e]8;;https://ko-fi.com/ilyamiro\a'
     local OSC8_END=$'\e]8;;\a'
 
     printf "\033[K%s--------------------------------------------------------------------------------%s\n" "$C_BLUE" "$RESET"
     printf "\033[K%s%s $(t "installer.ui.github")%s   %shttps://github.com/%s%s\n" "$BOLD" "$C_GREEN" "$RESET" "$OSC8_GH" "$REPO_SLUG" "$OSC8_END"
-    printf "\033[K%s%s $(t "installer.ui.twitter")%s  %s@ilyamirox%s  |  %s%s$(t "installer.ui.reddit")%s %su/ilyamiro1%s\n" "$BOLD" "$C_CYAN" "$RESET" "$OSC8_TW" "$OSC8_END" "$BOLD" "$C_RED" "$RESET" "$OSC8_RD" "$OSC8_END"
-    printf "\033[K%s%s $(t "installer.ui.telegram")%s %shttps://t.me/stewart_github%s\n" "$BOLD" "$C_BLUE" "$RESET" "$OSC8_TG" "$OSC8_END"
-    printf "\033[K%s%s $(t "installer.ui.donate")%s   %shttps://ko-fi.com/ilyamiro $(t "installer.ui.donate_sub")%s\n" "$BOLD" "$C_MAGENTA" "$RESET" "$OSC8_KF" "$OSC8_END"
     printf "\033[K%s--------------------------------------------------------------------------------%s\n" "$C_BLUE" "$RESET"
     printf "\033[K%s $(t "installer.ui.user")%s %-25s | %s$(t "installer.ui.os")%s %s\n" "$BOLD" "$RESET" "$USER_NAME" "$BOLD" "$RESET" "$OS_NAME"
     printf "\033[K%s $(t "installer.ui.cpu")%s  %-25s | %s$(t "installer.ui.gpu")%s %s\n" "$BOLD" "$RESET" "$CPU_INFO" "$BOLD" "$RESET" "$GPU_INFO"
@@ -467,11 +460,9 @@ run_installer_ui() {
             fi
 
             local S_SDDM="${DIM}[OFF]${RESET}"
-            local S_TEL="${DIM}[OFF]${RESET}"
             local S_WP="${DIM}[3 Random]${RESET}"
 
             [ "$OPT_SDDM" = true ] && S_SDDM="${C_GREEN}[ON]${RESET}"
-            [ "$ENABLE_TELEMETRY" = true ] && S_TEL="${C_GREEN}[ON]${RESET}"
             [ "$INSTALL_FULL_WALLPAPERS" = true ] && S_WP="${C_GREEN}[Full Pack]${RESET}"
 
             local items=()
@@ -479,15 +470,14 @@ run_installer_ui() {
             items+=("2. $COMP_MENU_ITEM")
             items+=("3. $(t "installer.ui.menu_sddm") $S_SDDM")
             items+=("4. $(t "installer.ui.menu_wallpapers") $S_WP")
-            items+=("5. $(t "installer.ui.menu_telemetry") $S_TEL")
 
             if [[ "$INSTALL_STATE" == "current" ]]; then
-                items+=("6. ${BOLD}${C_GREEN}$(t "installer.ui.menu_update")${RESET}")
-                items+=("7. ${BOLD}${C_YELLOW}$(t "installer.ui.menu_reinstall")${RESET}")
-                items+=("8. ${DIM}$(t "installer.ui.menu_exit")${RESET}")
-            else
-                items+=("6. ${BOLD}${C_GREEN}$(t "installer.ui.menu_install")${RESET}")
+                items+=("5. ${BOLD}${C_GREEN}$(t "installer.ui.menu_update")${RESET}")
+                items+=("6. ${BOLD}${C_YELLOW}$(t "installer.ui.menu_reinstall")${RESET}")
                 items+=("7. ${DIM}$(t "installer.ui.menu_exit")${RESET}")
+            else
+                items+=("5. ${BOLD}${C_GREEN}$(t "installer.ui.menu_install")${RESET}")
+                items+=("6. ${DIM}$(t "installer.ui.menu_exit")${RESET}")
             fi
 
             if [ "$rendered_lines" -gt 0 ]; then
@@ -537,9 +527,6 @@ run_installer_ui() {
                     INSTALL_FULL_WALLPAPERS=$([ "$INSTALL_FULL_WALLPAPERS" = true ] && echo false || echo true)
                     ;;
                 "5")
-                    ENABLE_TELEMETRY=$([ "$ENABLE_TELEMETRY" = true ] && echo false || echo true)
-                    ;;
-                "6")
                     if [ ${#SELECTED_COMPOSITORS[@]} -eq 0 ]; then
                         printf "\n%s[!] %s%s\n" "$C_RED" "$(t "installer.ui.error_no_compositor")" "$RESET"
                         sleep 1.5
@@ -549,7 +536,7 @@ run_installer_ui() {
                     cleanup_terminal
                     return 0
                     ;;
-                "7")
+                "6")
                     if [[ "$INSTALL_STATE" == "current" ]]; then
                         if [ ${#SELECTED_COMPOSITORS[@]} -eq 0 ]; then
                             printf "\n%s[!] %s%s\n" "$C_RED" "$(t "installer.ui.error_no_compositor")" "$RESET"
@@ -565,7 +552,7 @@ run_installer_ui() {
                         exit 0
                     fi
                     ;;
-                "8")
+                "7")
                     if [[ "$INSTALL_STATE" == "current" ]]; then
                         cleanup_terminal
                         clear
@@ -596,9 +583,6 @@ run_installer_ui() {
                             INSTALL_FULL_WALLPAPERS=$([ "$INSTALL_FULL_WALLPAPERS" = true ] && echo false || echo true)
                             ;;
                         *"5."*)
-                            ENABLE_TELEMETRY=$([ "$ENABLE_TELEMETRY" = true ] && echo false || echo true)
-                            ;;
-                        *"6."*)
                             if [ ${#SELECTED_COMPOSITORS[@]} -eq 0 ]; then
                                 printf "\n%s[!] %s%s\n" "$C_RED" "$(t "installer.ui.error_no_compositor")" "$RESET"
                                 sleep 1.5
@@ -608,7 +592,7 @@ run_installer_ui() {
                             cleanup_terminal
                             return 0
                             ;;
-                        *"7."*)
+                        *"6."*)
                             if [[ "$INSTALL_STATE" == "current" ]]; then
                                 if [ ${#SELECTED_COMPOSITORS[@]} -eq 0 ]; then
                                     printf "\n%s[!] %s%s\n" "$C_RED" "$(t "installer.ui.error_no_compositor")" "$RESET"
@@ -624,7 +608,7 @@ run_installer_ui() {
                                 exit 0
                             fi
                             ;;
-                        *"8."*)
+                        *"7."*)
                             if [[ "$INSTALL_STATE" == "current" ]]; then
                                 cleanup_terminal
                                 clear
@@ -652,11 +636,6 @@ draw_completion_screen() {
 EOF
     printf "%s\n\n" "$RESET"
     printf "%s%s  %s%s\n\n" "$BOLD" "$C_CYAN" "$(t "installer.ui.tagline")" "$RESET"
-    printf "%s%s================================================================================%s\n" "$BOLD" "$C_MAGENTA" "$RESET"
-    printf "%s%s $(t "installer.ui.support_creator")%s\n" "$BOLD" "$C_YELLOW" "$RESET"
-    printf " $(t "installer.ui.buy_coffee")\n"
-    printf " %s%sKo-fi:%s https://ko-fi.com/ilyamiro\n" "$BOLD" "$C_CYAN" "$RESET"
-    printf "%s%s================================================================================%s\n\n" "$BOLD" "$C_MAGENTA" "$RESET"
     printf "%s%s%s\n" "$C_GREEN" "$(t "installer.ui.installed_success" "ver=$target_ver" "commit=$target_commit")" "$RESET"
     if [ ${#FAILED_PKGS[@]} -gt 0 ]; then
         printf "\n%s%s%s%s\n" "$BOLD" "$C_RED" "$(t "installer.ui.failed_packages")" "$RESET"

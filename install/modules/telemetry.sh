@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WORKER_URL="https://dots-telemetry.ilyamiro-work.workers.dev"
+WORKER_URL=""
 
 MODE=""
 VERSION=""

@@ -76,8 +76,8 @@ Rectangle {
             textColor: isHoveredOrHighlighted ? ThemeBackend.text : (sideFocusRoot.isCompact ? ThemeBackend.subtext0 : ThemeBackend.overlay2)
             anchors.horizontalCenter: parent.horizontalCenter
             onClicked: {
-                if (Caching.serpantinumDir) {
-                    Quickshell.execDetached(["bash", "-c", Caching.serpantinumDir + "/scripts/qs_manager.sh toggle applauncher"])
+                if (Caching.aetherDir) {
+                    Quickshell.execDetached(["bash", "-c", Caching.aetherDir + "/scripts/qs_manager.sh toggle applauncher"])
                 }
             }
         }
@@ -114,8 +114,8 @@ Rectangle {
         cursorShape: Qt.PointingHandCursor
         z: -1
         onClicked: {
-            if (Caching.serpantinumDir) {
-                Quickshell.execDetached(["bash", "-c", Caching.serpantinumDir + "/scripts/qs_manager.sh toggle applauncher"])
+            if (Caching.aetherDir) {
+                Quickshell.execDetached(["bash", "-c", Caching.aetherDir + "/scripts/qs_manager.sh toggle applauncher"])
             }
         }
     }
