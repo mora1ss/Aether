@@ -1,33 +1,76 @@
 import QtQuick
 import QtQuick.Window
-import Qt5Compat.GraphicalEffects
 import SddmComponents 2.0
 
 Rectangle {
     id: root
     width: Screen.width
     height: Screen.height
+    color: colBase
 
     Image {
         anchors.fill: parent
         source: "bg.png"
         fillMode: Image.PreserveAspectCrop
+        asynchronous: false
+        cache: true
     }
 
     readonly property real s: Screen.height / 768
     property bool isQuickshell: typeof sddm === "undefined" || sddm.hostName === undefined
     property int sessionIndex: (typeof sessionModel !== "undefined" && sessionModel.lastIndex >= 0) ? sessionModel.lastIndex : 0
     property int userIndex: (typeof userModel !== "undefined" && userModel.lastIndex >= 0) ? userModel.lastIndex : 0
-    
+
     property real ui1: 0
     property real ui2: 0
     property string errorMessage: ""
+
+    function cfgColor(key, fallback) {
+        if (typeof config === "undefined" || config === null)
+            return fallback;
+        var value = "";
+        try {
+            value = config[key];
+        } catch (e) {
+            return fallback;
+        }
+        if (value === undefined || value === null)
+            return fallback;
+        value = String(value);
+        if (value.length === 0)
+            return fallback;
+        return value;
+    }
+
+    function svgIcon(inner, strokeHex) {
+        var stroke = String(strokeHex).replace("#", "%23");
+        return "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='" + stroke + "' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'>" + inner + "</svg>";
+    }
+
+    readonly property color colText: cfgColor("text", "#0F3C2C")
+    readonly property color colSubtext0: cfgColor("subtext0", "#1E4F3E")
+    readonly property color colSubtext1: cfgColor("subtext1", "#8ca090")
+    readonly property color colSurface0: cfgColor("surface0", "#E9F3EB")
+    readonly property color colSurface1: cfgColor("surface1", "#BEE8C7")
+    readonly property color colSurface2: cfgColor("surface2", "#d2ebd4")
+    readonly property color colCrust: cfgColor("crust", "#0A281D")
+    readonly property color colMauve: cfgColor("mauve", "#0F3C2C")
+    readonly property color colSapphire: cfgColor("sapphire", "#BEE8C7")
+    readonly property color colRed: cfgColor("red", "#ea1821")
+    readonly property color colMantle: cfgColor("mantle", "#D0EADB")
+    readonly property color colBase: cfgColor("base", "#eef6f0")
+
+    readonly property string iconPower: svgIcon("<path d='M18.36 6.64a9 9 0 1 1-12.73 0'></path><line x1='12' y1='2' x2='12' y2='12'></line>", colText)
+    readonly property string iconSession: svgIcon("<circle cx='12' cy='12' r='3'></circle><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'></path>", colText)
+    readonly property string iconReboot: svgIcon("<polyline points='23 4 23 10 17 10'></polyline><path d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'></path>", colText)
+    readonly property string iconSuspend: svgIcon("<path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path>", colText)
+    readonly property string iconLock: svgIcon("<rect x='3' y='11' width='18' height='11' rx='2' ry='2'></rect><path d='M7 11V7a5 5 0 0 1 10 0v4'></path>", colSubtext1)
 
     FontLoader {
         id: customFont
         source: "font/GoogleSans-VariableFont_GRAD,opsz,wght.ttf"
     }
-    
+
     readonly property string sansFont: customFont.name !== "" ? customFont.name : "Roboto, Inter, sans-serif"
 
     function syncModel() {
@@ -137,7 +180,7 @@ Rectangle {
         Column {
             spacing: 24 * s
             anchors.verticalCenter: parent.verticalCenter
-            
+
             Timer {
                 interval: 1000
                 running: true
@@ -152,23 +195,23 @@ Rectangle {
 
             Column {
                 spacing: -24 * s
-                
+
                 Text {
                     id: hText
                     text: Qt.formatTime(new Date(), "hh")
                     font.family: root.sansFont
                     font.pixelSize: 140 * s
                     font.weight: Font.Bold
-                    color: "#0F3C2C"
+                    color: root.colText
                 }
-                
+
                 Text {
                     id: mText
                     text: Qt.formatTime(new Date(), "mm")
                     font.family: root.sansFont
                     font.pixelSize: 140 * s
                     font.weight: Font.Bold
-                    color: "#1E4F3E"
+                    color: root.colSubtext0
                 }
             }
 
@@ -176,8 +219,8 @@ Rectangle {
                 width: dateChipText.implicitWidth + 32 * s
                 height: 44 * s
                 radius: 22 * s
-                color: "#BEE8C7"
-                
+                color: root.colSurface1
+
                 Text {
                     id: dateChipText
                     anchors.centerIn: parent
@@ -186,7 +229,7 @@ Rectangle {
                     font.pixelSize: 11 * s
                     font.bold: true
                     font.letterSpacing: 1 * s
-                    color: "#0F3C2C"
+                    color: root.colText
                 }
             }
         }
@@ -201,71 +244,66 @@ Rectangle {
                 font.pixelSize: 11 * s
                 font.bold: true
                 font.letterSpacing: 1.5 * s
-                color: "#8ca090"
+                color: root.colSubtext1
             }
 
             Grid {
                 columns: 2
                 spacing: 16 * s
-                
+
                 Rectangle {
                     id: powerTile
                     width: 180 * s; height: 76 * s; radius: 38 * s
-                    color: powerMouse.pressed ? "#0A281D" : (powerMouse.containsMouse ? "#0F3C2C" : "#E9F3EB")
+                    color: powerMouse.pressed ? root.colCrust : (powerMouse.containsMouse ? root.colSurface1 : root.colSurface0)
                     scale: powerMouse.pressed ? 0.95 : (powerMouse.containsMouse ? 1.03 : 1.0)
                     Behavior on color { ColorAnimation { duration: 150 } }
                     Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-                    
+
                     Row {
                         anchors.fill: parent
                         anchors.leftMargin: 16 * s
                         anchors.rightMargin: 16 * s
                         spacing: 12 * s
-                        
+
                         Rectangle {
                             width: 48 * s; height: 48 * s; radius: 24 * s
-                            color: "#BEE8C7"
+                            color: root.colSapphire
                             anchors.verticalCenter: parent.verticalCenter
-                            
+
                             Image {
-                                id: powerIcon
-                                source: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M18.36 6.64a9 9 0 1 1-12.73 0'></path><line x1='12' y1='2' x2='12' y2='12'></line></svg>"
+                                source: root.iconPower
                                 anchors.centerIn: parent
                                 width: 20 * s
                                 height: 20 * s
                                 sourceSize.width: 40 * s
                                 sourceSize.height: 40 * s
-                                visible: false
-                            }
-                            ColorOverlay {
-                                anchors.fill: powerIcon
-                                source: powerIcon
-                                color: "#0F3C2C"
+                                asynchronous: false
+                                cache: true
                             }
                         }
-                        
+
                         Column {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2 * s
-                            
+
                             Text {
                                 text: "POWER"
                                 font.family: root.sansFont
                                 font.pixelSize: 12 * s
                                 font.bold: true
-                                color: powerMouse.containsMouse ? "#BEE8C7" : "#0F3C2C"
+                                color: powerMouse.containsMouse ? root.colSapphire : root.colText
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                             Text {
                                 text: "SHUT DOWN"
                                 font.family: root.sansFont
                                 font.pixelSize: 9 * s
-                                color: powerMouse.containsMouse ? "#E9F3EB" : "#1E4F3E"
+                                color: powerMouse.containsMouse ? root.colSurface0 : root.colSubtext0
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                         }
                     }
-                    
+
                     MouseArea {
                         id: powerMouse
                         anchors.fill: parent
@@ -274,67 +312,62 @@ Rectangle {
                         onClicked: if (!root.isQuickshell) sddm.powerOff();
                     }
                 }
-                
+
                 Rectangle {
                     id: sessionTile
                     width: 180 * s; height: 76 * s; radius: 38 * s
-                    color: sessionMouse.pressed ? "#0A281D" : (sessionMouse.containsMouse ? "#0F3C2C" : "#E9F3EB")
+                    color: sessionMouse.pressed ? root.colCrust : (sessionMouse.containsMouse ? root.colSurface1 : root.colSurface0)
                     scale: sessionMouse.pressed ? 0.95 : (sessionMouse.containsMouse ? 1.03 : 1.0)
                     Behavior on color { ColorAnimation { duration: 150 } }
                     Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-                    
+
                     Row {
                         anchors.fill: parent
                         anchors.leftMargin: 16 * s
                         anchors.rightMargin: 16 * s
                         spacing: 12 * s
-                        
+
                         Rectangle {
                             width: 48 * s; height: 48 * s; radius: 24 * s
-                            color: "#BEE8C7"
+                            color: root.colSapphire
                             anchors.verticalCenter: parent.verticalCenter
-                            
+
                             Image {
-                                id: sessionIcon
-                                source: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='3'></circle><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'></path></svg>"
+                                source: root.iconSession
                                 anchors.centerIn: parent
                                 width: 20 * s
                                 height: 20 * s
                                 sourceSize.width: 40 * s
                                 sourceSize.height: 40 * s
-                                visible: false
-                            }
-                            ColorOverlay {
-                                anchors.fill: sessionIcon
-                                source: sessionIcon
-                                color: "#0F3C2C"
+                                asynchronous: false
+                                cache: true
                             }
                         }
-                        
+
                         Column {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2 * s
-                            
+
                             Text {
                                 text: "SESSION"
                                 font.family: root.sansFont
                                 font.pixelSize: 12 * s
                                 font.bold: true
-                                color: sessionMouse.containsMouse ? "#BEE8C7" : "#0F3C2C"
+                                color: sessionMouse.containsMouse ? root.colSapphire : root.colText
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                             Text {
                                 text: ((sessionHelper.currentItem && sessionHelper.currentItem.sName) ? sessionHelper.currentItem.sName : "PLASMA").toUpperCase()
                                 font.family: root.sansFont
                                 font.pixelSize: 9 * s
-                                color: sessionMouse.containsMouse ? "#E9F3EB" : "#1E4F3E"
+                                color: sessionMouse.containsMouse ? root.colSurface0 : root.colSubtext0
                                 Behavior on color { ColorAnimation { duration: 150 } }
                                 elide: Text.ElideRight
                                 width: 90 * s
                             }
                         }
                     }
-                    
+
                     MouseArea {
                         id: sessionMouse
                         anchors.fill: parent
@@ -351,61 +384,56 @@ Rectangle {
                 Rectangle {
                     id: rebootTile
                     width: 180 * s; height: 76 * s; radius: 38 * s
-                    color: rebootMouse.pressed ? "#0A281D" : (rebootMouse.containsMouse ? "#0F3C2C" : "#E9F3EB")
+                    color: rebootMouse.pressed ? root.colCrust : (rebootMouse.containsMouse ? root.colSurface1 : root.colSurface0)
                     scale: rebootMouse.pressed ? 0.95 : (rebootMouse.containsMouse ? 1.03 : 1.0)
                     Behavior on color { ColorAnimation { duration: 150 } }
                     Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-                    
+
                     Row {
                         anchors.fill: parent
                         anchors.leftMargin: 16 * s
                         anchors.rightMargin: 16 * s
                         spacing: 12 * s
-                        
+
                         Rectangle {
                             width: 48 * s; height: 48 * s; radius: 24 * s
-                            color: "#BEE8C7"
+                            color: root.colSapphire
                             anchors.verticalCenter: parent.verticalCenter
-                            
+
                             Image {
-                                id: rebootIcon
-                                source: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='23 4 23 10 17 10'></polyline><path d='M20.49 15a9 9 0 1 1-2.12-9.36L23 10'></path></svg>"
+                                source: root.iconReboot
                                 anchors.centerIn: parent
                                 width: 20 * s
                                 height: 20 * s
                                 sourceSize.width: 40 * s
                                 sourceSize.height: 40 * s
-                                visible: false
-                            }
-                            ColorOverlay {
-                                anchors.fill: rebootIcon
-                                source: rebootIcon
-                                color: "#0F3C2C"
+                                asynchronous: false
+                                cache: true
                             }
                         }
-                        
+
                         Column {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2 * s
-                            
+
                             Text {
                                 text: "REBOOT"
                                 font.family: root.sansFont
                                 font.pixelSize: 12 * s
                                 font.bold: true
-                                color: rebootMouse.containsMouse ? "#BEE8C7" : "#0F3C2C"
+                                color: rebootMouse.containsMouse ? root.colSapphire : root.colText
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                             Text {
                                 text: "RESTART"
                                 font.family: root.sansFont
                                 font.pixelSize: 9 * s
-                                color: rebootMouse.containsMouse ? "#E9F3EB" : "#1E4F3E"
+                                color: rebootMouse.containsMouse ? root.colSurface0 : root.colSubtext0
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                         }
                     }
-                    
+
                     MouseArea {
                         id: rebootMouse
                         anchors.fill: parent
@@ -418,61 +446,56 @@ Rectangle {
                 Rectangle {
                     id: suspendTile
                     width: 180 * s; height: 76 * s; radius: 38 * s
-                    color: suspendMouse.pressed ? "#0A281D" : (suspendMouse.containsMouse ? "#0F3C2C" : "#E9F3EB")
+                    color: suspendMouse.pressed ? root.colCrust : (suspendMouse.containsMouse ? root.colSurface1 : root.colSurface0)
                     scale: suspendMouse.pressed ? 0.95 : (suspendMouse.containsMouse ? 1.03 : 1.0)
                     Behavior on color { ColorAnimation { duration: 150 } }
                     Behavior on scale { NumberAnimation { duration: 200; easing.type: Easing.OutBack } }
-                    
+
                     Row {
                         anchors.fill: parent
                         anchors.leftMargin: 16 * s
                         anchors.rightMargin: 16 * s
                         spacing: 12 * s
-                        
+
                         Rectangle {
                             width: 48 * s; height: 48 * s; radius: 24 * s
-                            color: "#BEE8C7"
+                            color: root.colSapphire
                             anchors.verticalCenter: parent.verticalCenter
-                            
+
                             Image {
-                                id: suspendIcon
-                                source: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path></svg>"
+                                source: root.iconSuspend
                                 anchors.centerIn: parent
                                 width: 20 * s
                                 height: 20 * s
                                 sourceSize.width: 40 * s
                                 sourceSize.height: 40 * s
-                                visible: false
-                            }
-                            ColorOverlay {
-                                anchors.fill: suspendIcon
-                                source: suspendIcon
-                                color: "#0F3C2C"
+                                asynchronous: false
+                                cache: true
                             }
                         }
-                        
+
                         Column {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2 * s
-                            
+
                             Text {
                                 text: "SLEEP"
                                 font.family: root.sansFont
                                 font.pixelSize: 12 * s
                                 font.bold: true
-                                color: suspendMouse.containsMouse ? "#BEE8C7" : "#0F3C2C"
+                                color: suspendMouse.containsMouse ? root.colSapphire : root.colText
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                             Text {
                                 text: "SUSPEND"
                                 font.family: root.sansFont
                                 font.pixelSize: 9 * s
-                                color: suspendMouse.containsMouse ? "#E9F3EB" : "#1E4F3E"
+                                color: suspendMouse.containsMouse ? root.colSurface0 : root.colSubtext0
                                 Behavior on color { ColorAnimation { duration: 150 } }
                             }
                         }
                     }
-                    
+
                     MouseArea {
                         id: suspendMouse
                         anchors.fill: parent
@@ -488,34 +511,29 @@ Rectangle {
                 width: 376 * s
                 height: 180 * s
                 radius: 32 * s
-                color: "#E9F3EB"
+                color: root.colSurface0
                 transform: Translate { id: shakeTranslate }
-                
+
                 Column {
                     anchors.fill: parent
                     anchors.margins: 20 * s
                     spacing: 12 * s
-                    
+
                     Row {
                         width: parent.width
                         spacing: 8 * s
-                        
+
                         Item {
                             width: 12 * s
                             height: 12 * s
                             anchors.verticalCenter: parent.verticalCenter
                             Image {
-                                id: lockIcon
-                                source: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='11' width='18' height='11' rx='2' ry='2'></rect><path d='M7 11V7a5 5 0 0 1 10 0v4'></path></svg>"
+                                source: root.iconLock
                                 anchors.fill: parent
                                 sourceSize.width: 24 * s
                                 sourceSize.height: 24 * s
-                                visible: false
-                            }
-                            ColorOverlay {
-                                anchors.fill: lockIcon
-                                source: lockIcon
-                                color: "#8ca090"
+                                asynchronous: false
+                                cache: true
                             }
                         }
                         Text {
@@ -524,14 +542,14 @@ Rectangle {
                             font.pixelSize: 10 * s
                             font.bold: true
                             font.letterSpacing: 1 * s
-                            color: "#8ca090"
+                            color: root.colSubtext1
                             anchors.verticalCenter: parent.verticalCenter
                         }
                         Text {
                             text: "•  now"
                             font.family: root.sansFont
                             font.pixelSize: 10 * s
-                            color: "#8ca090"
+                            color: root.colSubtext1
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -540,11 +558,11 @@ Rectangle {
                         width: parent.width
                         height: 52 * s
                         radius: 26 * s
-                        color: "#D0EADB"
-                        border.color: root.errorMessage !== "" ? "#ea1821" : (pwd.activeFocus ? "#0F3C2C" : "transparent")
+                        color: root.colMantle
+                        border.color: root.errorMessage !== "" ? root.colRed : (pwd.activeFocus ? root.colMauve : "transparent")
                         border.width: pwd.activeFocus ? 2 * s : 0
                         Behavior on border.color { ColorAnimation { duration: 150 } }
-                        
+
                         ListModel {
                             id: charModel
                         }
@@ -647,7 +665,7 @@ Rectangle {
                                     width: 12 * s
                                     height: 12 * s
                                     radius: Math.round(width * 0.24)
-                                    color: "#1d3c34"
+                                    color: root.colText
                                     antialiasing: true
 
                                     property real dotPop: 1.0
@@ -694,10 +712,10 @@ Rectangle {
                             cursorDelegate: Item { width: 0; height: 0 }
                             clip: true
                             inputMethodHints: Qt.ImhHiddenText | Qt.ImhSensitiveData | Qt.ImhNoPredictiveText | Qt.ImhNoAutoUppercase
-                            
+
                             property bool wasClicked: false
                             onActiveFocusChanged: if (!activeFocus && text.length === 0) wasClicked = false
-                            
+
                             onTextChanged: root.syncModel()
 
                             Text {
@@ -707,11 +725,11 @@ Rectangle {
                                 font.pixelSize: 11 * s
                                 font.bold: true
                                 font.letterSpacing: 1.5 * s
-                                color: root.errorMessage !== "" ? "#ea1821" : "#8ca090"
+                                color: root.errorMessage !== "" ? root.colRed : root.colSubtext1
                                 opacity: pwd.text === "" && (!pwd.activeFocus || (!pwd.wasClicked && pwd.text.length === 0)) ? 1 : 0
                                 Behavior on opacity { NumberAnimation { duration: 150 } }
                             }
-                            
+
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.IBeamCursor
@@ -720,7 +738,7 @@ Rectangle {
                                     pwd.forceActiveFocus();
                                 }
                             }
-                            
+
                             onAccepted: {
                                 if (!root.isQuickshell && pwd.text !== "") {
                                     let currentUser = userHelper.currentItem ? userHelper.currentItem.uLogin : userModel.lastUser;
@@ -733,16 +751,16 @@ Rectangle {
                     Row {
                         width: parent.width
                         spacing: 12 * s
-                        
+
                         Rectangle {
                             width: userText.implicitWidth + 32 * s
                             height: 38 * s
                             radius: 19 * s
-                            color: userMouse.pressed ? "#cbe8cc" : (userMouse.containsMouse ? "#d2ebd4" : "#eef6f0")
+                            color: userMouse.pressed ? root.colSurface2 : (userMouse.containsMouse ? root.colSurface1 : root.colBase)
                             scale: userMouse.pressed ? 0.95 : (userMouse.containsMouse ? 1.02 : 1.0)
                             Behavior on color { ColorAnimation { duration: 150 } }
                             Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
-                            
+
                             Text {
                                 id: userText
                                 anchors.centerIn: parent
@@ -751,9 +769,9 @@ Rectangle {
                                 font.pixelSize: 10 * s
                                 font.bold: true
                                 font.letterSpacing: 1 * s
-                                color: "#1d3c34"
+                                color: root.colText
                             }
-                            
+
                             MouseArea {
                                 id: userMouse
                                 anchors.fill: parent
@@ -770,35 +788,35 @@ Rectangle {
                         Item {
                             width: parent.width - (userText.implicitWidth + 32 * s) - 12 * s
                             height: 38 * s
-                            
+
                             Rectangle {
                                 anchors.right: parent.right
                                 width: parent.width
                                 height: 38 * s
                                 radius: 19 * s
-                                color: loginMouse.pressed ? "#0A281D" : (loginMouse.containsMouse ? "#1E4F3E" : "#0F3C2C")
+                                color: loginMouse.pressed ? root.colCrust : (loginMouse.containsMouse ? root.colSapphire : root.colMauve)
                                 scale: loginMouse.pressed ? 0.95 : (loginMouse.containsMouse ? 1.02 : 1.0)
                                 Behavior on color { ColorAnimation { duration: 150 } }
                                 Behavior on scale { NumberAnimation { duration: 150; easing.type: Easing.OutBack } }
-                                
+
                                 Row {
                                     anchors.centerIn: parent
                                     spacing: 6 * s
-                                    
+
                                     Text {
                                         text: "UNLOCK"
                                         font.family: root.sansFont
                                         font.pixelSize: 10 * s
                                         font.bold: true
                                         font.letterSpacing: 1.5 * s
-                                        color: "#BEE8C7"
+                                        color: root.colBase
                                         anchors.verticalCenter: parent.verticalCenter
                                     }
                                     Text {
                                         text: "➔"
                                         font.family: root.sansFont
                                         font.pixelSize: 11 * s
-                                        color: "#BEE8C7"
+                                        color: root.colBase
                                         anchors.verticalCenter: parent.verticalCenter
                                         transform: Translate {
                                             x: loginMouse.containsMouse ? 3 * s : 0
@@ -806,7 +824,7 @@ Rectangle {
                                         }
                                     }
                                 }
-                                
+
                                 MouseArea {
                                     id: loginMouse
                                     anchors.fill: parent
