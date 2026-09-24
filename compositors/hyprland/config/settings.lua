@@ -1,4 +1,4 @@
-hl.config({
+local config = {
   general = {
     border_size = 0,
     gaps_in = 4,
@@ -39,7 +39,15 @@ hl.config({
     disable_hyprland_logo = true,
     disable_splash_rendering = true,
   },
-})
+}
+
+if _G.AETHER_NVIDIA then
+  config.cursor = {
+    no_hardware_cursors = true,
+  }
+end
+
+hl.config(config)
 
 hl.curve("myBezier", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.05} } })
 
