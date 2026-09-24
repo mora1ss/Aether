@@ -1,3 +1,18 @@
+### 2.1.9
+
+- feat: add a file browser in the launcher to open files with the default application configured for it
+- fix: rework the way the switch options sizes change on the length of the text inside. Removed premature size change
+- feat: add a new Lumen material-analog clock widget variant
+- fix: restyle numbers 8, 5 and 9 in the material clock style
+- style: improve the numbers look for the clock material
+- feat: add material analog and material clock styles to widgets
+- style: make the switch option expand its width when the size doesn't fit
+- fix: make the wallpaper loading asynchronious to optimize the lockscreen
+- fix: make sure lock doesn't have a delay on startup due to screen variables being empty
+- fix: remove sidebar settings to keep it all on bar settings
+- fix: make autohide timeout not apply to smart-autohide on workspace changed hiding state
+- fix: remove the border for the input
+
 ### 2.1.8
 
 - feat: add time-setting styling, move the time string setting into modules, merge the modules and sidemodules subtabs under the bar tab

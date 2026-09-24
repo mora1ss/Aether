@@ -711,7 +711,10 @@
   },
   "applauncher": {
     "search": "Suchen",
-    "placeholder": "Mit > beginnen für befehle..."
+    "placeholder": "Mit > beginnen für befehle...",
+    "tab_applications": "Anwendungen",
+    "tab_files": "Dateien",
+    "placeholder_files": "Dateien suchen oder Pfad eingeben..."
   },
   "calendar": {
     "loading": "Laden...",

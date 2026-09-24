@@ -5,7 +5,7 @@ import "../"
 
 Item {
     id: root
-    implicitWidth: Math.max(120, tabsLayout.implicitWidth)
+    implicitWidth: Math.max(120, (root.maxNeededWidth > 0 ? root.maxNeededWidth : 28) * (root.options ? root.options.length : 1))
     implicitHeight: 32
 
     property var options: ["x", "y"]
@@ -29,6 +29,81 @@ Item {
 
     property real flashOpacity: 0.0
     property real popScale: 1.0
+
+    property real maxNeededWidth: 0
+    property real totalNeededWidth: 0
+    property var allocatedWidths: []
+
+    function recalculateLayout() {
+        var count = root.options ? root.options.length : 0;
+        if (count === 0) {
+            root.allocatedWidths = [];
+            return;
+        }
+
+        var needs = [];
+        var totalNeeded = 0;
+        var maxNeeded = 0;
+
+        for (var i = 0; i < count; i++) {
+            var it = tabsRepeater.itemAt(i);
+            var req = it ? it.fitWidth : 28;
+            needs.push(req);
+            totalNeeded += req;
+            if (req > maxNeeded) {
+                maxNeeded = req;
+            }
+        }
+
+        root.maxNeededWidth = maxNeeded;
+        root.totalNeededWidth = totalNeeded;
+
+        var availableW = root.width;
+        if (availableW <= 0) {
+            availableW = Math.max(120, maxNeeded * count);
+        }
+
+        var equalW = availableW / count;
+        var widths = [];
+
+        if (maxNeeded <= equalW) {
+            for (var i = 0; i < count; i++) {
+                widths.push(equalW);
+            }
+        } else if (availableW >= totalNeeded) {
+            var totalDeficit = 0;
+            var totalSurplus = 0;
+
+            for (var i = 0; i < count; i++) {
+                if (needs[i] > equalW) {
+                    totalDeficit += (needs[i] - equalW);
+                } else {
+                    totalSurplus += (equalW - needs[i]);
+                }
+            }
+
+            var f = totalSurplus > 0 ? (totalDeficit / totalSurplus) : 0;
+            if (f > 1.0) f = 1.0;
+
+            for (var i = 0; i < count; i++) {
+                if (needs[i] > equalW) {
+                    widths.push(needs[i]);
+                } else {
+                    widths.push(equalW - f * (equalW - needs[i]));
+                }
+            }
+        } else {
+            for (var i = 0; i < count; i++) {
+                widths.push(totalNeeded > 0 ? (availableW * (needs[i] / totalNeeded)) : equalW);
+            }
+        }
+
+        root.allocatedWidths = widths;
+    }
+
+    onWidthChanged: recalculateLayout()
+    onOptionsChanged: recalculateLayout()
+    onFontPixelSizeChanged: recalculateLayout()
 
     Rectangle {
         id: bgShape
@@ -91,8 +166,8 @@ Item {
             Behavior on color { ColorAnimation { duration: 180 } }
         }
 
-        RowLayout {
-            id: tabsLayout
+        Row {
+            id: tabsRow
             anchors.fill: parent
             spacing: 0
             z: 1
@@ -100,11 +175,21 @@ Item {
             Repeater {
                 id: tabsRepeater
                 model: root.options
+                onCountChanged: root.recalculateLayout()
 
                 Item {
                     id: optionItem
                     required property string modelData
                     required property int index
+
+                    readonly property real fitWidth: Math.max(28, Math.ceil(optMetrics.width) + 10)
+
+                    width: (root.allocatedWidths && root.allocatedWidths.length > optionItem.index)
+                        ? root.allocatedWidths[optionItem.index]
+                        : (root.options && root.options.length > 0 ? (parent.width / root.options.length) : 0)
+                    height: parent.height
+
+                    Component.onCompleted: root.recalculateLayout()
 
                     TextMetrics {
                         id: optMetrics
@@ -112,13 +197,8 @@ Item {
                         font.weight: Font.Normal
                         font.pixelSize: root.fontPixelSize
                         text: optionItem.modelData
+                        onWidthChanged: root.recalculateLayout()
                     }
-
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: Math.max(28, Math.round(optMetrics.width + 16))
-                    Layout.minimumWidth: Math.max(16, Math.round(optMetrics.width * (root.minFontPixelSize / root.fontPixelSize) + 8))
-                    implicitWidth: Layout.preferredWidth
 
                     Rectangle {
                         anchors.fill: parent

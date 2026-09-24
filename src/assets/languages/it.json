@@ -666,7 +666,10 @@
   },
   "applauncher": {
     "search": "Cerca",
-    "placeholder": "Inizia con > per un comando..."
+    "placeholder": "Inizia con > per un comando...",
+    "tab_applications": "Applicazioni",
+    "tab_files": "File",
+    "placeholder_files": "Cerca file o inserisci percorso..."
   },
   "calendar": {
     "loading": "Caricamento...",

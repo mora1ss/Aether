@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
 
-_aether_sddm_sync() {
-    local sync_script
-    sync_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../sddm/sync.sh"
-    if [ ! -f "$sync_script" ]; then
-        return 0
-    fi
-    if command -v timeout >/dev/null 2>&1; then
-        timeout 2s bash "$sync_script" >/dev/null 2>&1 || true
-    else
-        bash "$sync_script" >/dev/null 2>&1 || true
-    fi
-}
-_aether_sddm_sync
-
 rm -f /tmp/aetherd.lock /tmp/aetherd.pid 2>/dev/null
 
 if command -v systemctl &>/dev/null; then

@@ -667,7 +667,10 @@
   },
   "applauncher": {
     "search": "Tìm kiếm",
-    "placeholder": "Bắt đầu bằng dấu > để nhập lệnh..."
+    "placeholder": "Bắt đầu bằng dấu > để nhập lệnh...",
+    "tab_applications": "Ứng dụng",
+    "tab_files": "Tệp",
+    "placeholder_files": "Tìm kiếm tệp hoặc nhập đường dẫn..."
   },
   "calendar": {
     "loading": "Đang tải...",

@@ -667,7 +667,10 @@
   },
   "applauncher": {
     "search": "검색",
-    "placeholder": "명령을 실행하려면 > 로 시작하세요..."
+    "placeholder": "명령을 실행하려면 > 로 시작하세요...",
+    "tab_applications": "애플리케이션",
+    "tab_files": "파일",
+    "placeholder_files": "파일 검색 또는 경로 입력..."
   },
   "calendar": {
     "loading": "불러오는 중...",

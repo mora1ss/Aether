@@ -123,19 +123,7 @@ Item {
 
                         Image {
                             anchors.fill: parent
-                            source: {
-                                let ic = model.icon || "";
-                                if (!ic) return "";
-                                if (ic.startsWith("file://") || ic.startsWith("image://") || ic.startsWith("http://") || ic.startsWith("https://")) return ic;
-                                if (ic.startsWith("/")) return "file://" + ic;
-                                if (typeof Quickshell !== "undefined" && typeof Quickshell.iconPath === "function") {
-                                    let resolved = Quickshell.iconPath(ic);
-                                    if (resolved && resolved.length > 0) {
-                                        return resolved.startsWith("/") ? ("file://" + resolved) : resolved;
-                                    }
-                                }
-                                return "";
-                            }
+                            source: model.icon ? (model.icon.startsWith("/") ? "file://" + model.icon : "image://icon/" + model.icon) : "image://icon/application-x-executable"
                             sourceSize: Qt.size(64, 64)
                             fillMode: Image.PreserveAspectFit
                             smooth: true

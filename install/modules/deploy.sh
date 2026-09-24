@@ -162,6 +162,7 @@ setup_sddm() {
     fi
 
     sudo rm -rf /usr/share/sddm/themes/matugen-minimal
+    sudo rm -rf /usr/share/sddm/themes/material-you
     sudo rm -f /etc/sddm.conf.d/*matugen*.conf
     sudo rm -f /etc/sddm.conf.d/*material-you*.conf
 
@@ -172,57 +173,16 @@ setup_sddm() {
 
     local sddm_theme_src="$project_root/config/sddm/themes/material-you"
     local sddm_theme_dest="/usr/share/sddm/themes/material-you"
-    local sddm_keep_dir=""
-
-    if [ -d "$sddm_theme_dest" ]; then
-        sddm_keep_dir="$(mktemp -d)"
-        for f in bg.png colors.json; do
-            if [ -f "$sddm_theme_dest/$f" ]; then
-                sudo cp -a "$sddm_theme_dest/$f" "$sddm_keep_dir/" 2>/dev/null || true
-            fi
-        done
-    fi
-
-    sudo rm -rf /usr/share/sddm/themes/material-you
 
     if [ -d "$sddm_theme_src" ]; then
         sudo mkdir -p "$sddm_theme_dest"
         sudo cp -r "$sddm_theme_src/." "$sddm_theme_dest/"
-        if [ -n "$sddm_keep_dir" ]; then
-            for f in bg.png colors.json; do
-                if [ -f "$sddm_keep_dir/$f" ]; then
-                    sudo cp -a "$sddm_keep_dir/$f" "$sddm_theme_dest/"
-                fi
-            done
-            rm -rf "$sddm_keep_dir" 2>/dev/null || sudo rm -rf "$sddm_keep_dir"
-        fi
         sudo chmod -R 755 "$sddm_theme_dest"
-        sudo chmod 644 "$sddm_theme_dest/bg.png" "$sddm_theme_dest/colors.json" 2>/dev/null || true
         if [ -d "$sddm_theme_src/font" ]; then
             sudo mkdir -p /usr/share/fonts/TTF
             sudo cp -r "$sddm_theme_src/font/"*.ttf /usr/share/fonts/TTF/ 2>/dev/null || true
             fc-cache -f /usr/share/fonts >/dev/null 2>&1 || true
         fi
-    fi
-
-    local sddm_apply_src="$project_root/src/scripts/sddm/apply.sh"
-    if [ -f "$sddm_apply_src" ]; then
-        sudo install -Dm755 "$sddm_apply_src" /usr/lib/aether/sddm-apply
-    fi
-    local sddm_policy_src="$project_root/src/scripts/sddm/org.aether.sddm.apply.policy"
-    if [ -f "$sddm_policy_src" ]; then
-        sudo install -Dm644 "$sddm_policy_src" /usr/share/polkit-1/actions/org.aether.sddm.apply.policy
-    fi
-    local sddm_rules_src="$project_root/src/scripts/sddm/org.aether.sddm.apply.rules"
-    if [ -f "$sddm_rules_src" ]; then
-        sudo install -Dm644 "$sddm_rules_src" /usr/share/polkit-1/rules.d/50-org.aether.sddm.apply.rules
-    fi
-
-    local sddm_sync_src="$project_root/src/scripts/sddm/sync.sh"
-    if [ -f "$HOME/.local/state/aether/qs_colors.json" ] && [ -f "$sddm_sync_src" ]; then
-        AETHER_SDDM_APPLY_CMD=sudo bash "$sddm_sync_src" >/dev/null 2>&1 || true
-    elif [ -f "$sddm_theme_dest/colors.json" ] && [ -x /usr/lib/aether/sddm-apply ]; then
-        sudo /usr/lib/aether/sddm-apply --colors "$sddm_theme_dest/colors.json" >/dev/null 2>&1 || true
     fi
 
     sudo mkdir -p /etc/sddm.conf.d
