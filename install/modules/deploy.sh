@@ -51,6 +51,11 @@ get_wallpaper_dir() {
 install_wallpapers() {
     local full_pack="${1:-true}"
     local wallpaper_dir
+
+    if command -v xdg-user-dirs-update >/dev/null 2>&1; then
+        xdg-user-dirs-update
+    fi
+
     wallpaper_dir=$(get_wallpaper_dir)
     local wallpaper_repo="https://github.com/mora1ss/shell-wallpapers.git"
     local clone_dir="${XDG_CACHE_HOME:-"$HOME/.cache"}/aether-wallpapers"

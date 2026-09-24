@@ -103,6 +103,7 @@ let
     wl-gammarelay-rs
     wmctrl
     xdg-desktop-portal-gtk
+    xdg-user-dirs
     zbar
     quickshell
   ];

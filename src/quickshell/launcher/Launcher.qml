@@ -581,6 +581,15 @@ PanelWindow {
         return null;
     }
 
+    function desktopIdBase(desktopId) {
+        return (desktopId || "").toLowerCase().replace(/\.desktop$/, "");
+    }
+
+    function isHwlocDesktop(desktopId) {
+        let id = desktopIdBase(desktopId);
+        return id === "lstopo" || id === "hwloc" || id.indexOf("lstopo") !== -1 || id.indexOf("hwloc") !== -1;
+    }
+
     function loadApps() {
         let arr = [];
 
@@ -609,12 +618,13 @@ PanelWindow {
                     score = f_score + l_score + (0.5 * c_score);
                 }
 
+                let hwlocApp = isHwlocDesktop(e.id);
                 arr.push({
                     name: e.name,
                     description: e.comment || "",
                     desktop_id: e.id,
-                    icon: e.icon || "",
-                    fontIcon: "",
+                    icon: hwlocApp ? "" : (e.icon || ""),
+                    fontIcon: hwlocApp ? "󰘚" : "",
                     score: score,
                     isCommand: false,
                     command: "",
