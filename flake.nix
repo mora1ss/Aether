@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     aether-wallpapers = {
-      url = "github:ilyamiro/shell-wallpapers";
+      url = "github:mora1ss/shell-wallpapers";
       flake = false;
     };
   };

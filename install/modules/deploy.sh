@@ -52,13 +52,14 @@ install_wallpapers() {
     local full_pack="${1:-true}"
     local wallpaper_dir
     wallpaper_dir=$(get_wallpaper_dir)
-    local wallpaper_repo="https://github.com/ilyamiro/shell-wallpapers.git"
+    local wallpaper_repo="https://github.com/mora1ss/shell-wallpapers.git"
     local clone_dir="${XDG_CACHE_HOME:-"$HOME/.cache"}/aether-wallpapers"
 
     mkdir -p "$wallpaper_dir"
 
     local sync_success=false
     if [ -d "$clone_dir/.git" ]; then
+        git -C "$clone_dir" remote set-url origin "$wallpaper_repo" 2>/dev/null || true
         if git -C "$clone_dir" fetch --depth 1 origin 2>/dev/null; then
             if git -C "$clone_dir" reset --hard FETCH_HEAD 2>/dev/null || \
                git -C "$clone_dir" reset --hard origin/HEAD 2>/dev/null || \
