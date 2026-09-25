@@ -294,7 +294,10 @@ Item {
                     let stateDir = (typeof Caching !== "undefined" && Caching.stateDir) ? Caching.stateDir : (Quickshell.env("HOME") + "/.local/state/aether");
                     Quickshell.execDetached(["bash", "-c", "mkdir -p \"" + stateDir + "\" && cp -f \"" + stateDir + "/qs_colors.json\" \"" + stateDir + "/qs_matugen_colors.json\" 2>/dev/null || true"]);
                 }
-                Quickshell.execDetached(["bash", "-c", "killall -USR1 .kitty-wrapped 2>/dev/null || pkill -SIGUSR1 kitty 2>/dev/null || true"]);
+                let liveScript = (typeof Caching !== "undefined" && Caching.aetherDir)
+                    ? (Caching.aetherDir + "/scripts/apply_live.sh")
+                    : (Quickshell.env("HOME") + "/.local/share/aether/src/scripts/apply_live.sh");
+                Quickshell.execDetached(["bash", liveScript]);
             }
 
             root._currentReqType = "";

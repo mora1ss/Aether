@@ -12,3 +12,11 @@ output_path = "~/.config/cava/config"
 [templates.fastfetch]
 input_path = "templates/fastfetch.jsonc.template"
 output_path = "~/.config/fastfetch/config.jsonc"
+
+[templates.gtk3]
+input_path = "templates/gtk3.css.template"
+output_path = "~/.config/gtk-3.0/gtk.css"
+
+[templates.gtk4]
+input_path = "templates/gtk4.css.template"
+output_path = "~/.config/gtk-4.0/gtk.css"

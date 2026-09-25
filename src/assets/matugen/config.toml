@@ -16,3 +16,11 @@ output_path = "~/.config/kitty/colors.conf"
 [templates.cava]
 input_path = "templates/cava-colors.ini.template"
 output_path = "~/.config/cava/config"
+
+[templates.gtk3]
+input_path = "templates/gtk3.css.template"
+output_path = "~/.config/gtk-3.0/gtk.css"
+
+[templates.gtk4]
+input_path = "templates/gtk4.css.template"
+output_path = "~/.config/gtk-4.0/gtk.css"
