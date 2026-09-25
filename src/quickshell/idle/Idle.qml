@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import "../"
 
@@ -25,7 +26,7 @@ Item {
                 "timeout": 120,
                 "enabled": true,
                 "respectInhibitors": true,
-                "mprisInhibit": false,
+                "mprisInhibit": true,
                 "warningTimeout": 0,
                 "warningCommand": "",
                 "beforeCommand": "",
@@ -38,7 +39,7 @@ Item {
                 "timeout": 300,
                 "enabled": true,
                 "respectInhibitors": true,
-                "mprisInhibit": false,
+                "mprisInhibit": true,
                 "warningTimeout": 10,
                 "warningCommand": "",
                 "beforeCommand": "",
@@ -51,7 +52,7 @@ Item {
                 "timeout": 360,
                 "enabled": true,
                 "respectInhibitors": true,
-                "mprisInhibit": false,
+                "mprisInhibit": true,
                 "warningTimeout": 0,
                 "warningCommand": "",
                 "beforeCommand": "",
@@ -64,7 +65,7 @@ Item {
                 "timeout": 600,
                 "enabled": true,
                 "respectInhibitors": true,
-                "mprisInhibit": false,
+                "mprisInhibit": true,
                 "warningTimeout": 30,
                 "warningCommand": "",
                 "isCustom": false
@@ -107,6 +108,54 @@ Item {
             return Mpris.players && Mpris.players.values ? Mpris.players.values.some(p => p.playbackState === MprisPlaybackState.Playing) : false;
         } catch (e) {
             return false;
+        }
+    }
+
+    property bool focusedFullscreen: {
+        try {
+            if (typeof Hyprland !== "undefined") {
+                if (Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.hasFullscreen)
+                    return true;
+                if (Hyprland.activeToplevel && Hyprland.activeToplevel.fullscreen)
+                    return true;
+            }
+        } catch (e) {}
+        return false;
+    }
+
+    property bool audioActive: false
+    property bool sessionBusy: focusedFullscreen || audioActive
+
+    onSessionBusyChanged: {
+        if (sessionBusy && isDimmed && !isLocked)
+            isDimmed = false;
+    }
+
+    function actionMayRun(act) {
+        if (sessionBusy)
+            return false;
+        if (act && act.mprisInhibit && isMediaPlaying)
+            return false;
+        return true;
+    }
+
+    Process {
+        id: audioProbe
+        running: false
+        command: ["python3", "-c", "import json,subprocess,sys\ntry:\n raw=subprocess.check_output(['pw-dump','Node'],stderr=subprocess.DEVNULL)\n nodes=json.loads(raw)\nexcept Exception:\n print('0'); sys.exit(0)\nfor node in nodes:\n info=node.get('info') or {}\n props=info.get('props') or {}\n mc=props.get('media.class') or ''\n if mc=='Stream/Output/Audio' and info.get('state')=='running':\n  print('1'); sys.exit(0)\nprint('0')"]
+        stdout: StdioCollector {
+            onStreamFinished: idleRoot.audioActive = (this.text.trim() === "1")
+        }
+    }
+
+    Timer {
+        interval: 4000
+        repeat: true
+        running: idleRoot.idleEnabled
+        triggeredOnStart: true
+        onTriggered: {
+            if (!audioProbe.running)
+                audioProbe.running = true;
         }
     }
 
@@ -356,7 +405,7 @@ Item {
                          monitorDelegate.isValidInPipeline &&
                          monitorDelegate.isActionEnabled &&
                          monitorDelegate.hasWarning &&
-                         (!monitorDelegate.modelData || !monitorDelegate.modelData.mprisInhibit || !idleRoot.isMediaPlaying)
+                         idleRoot.actionMayRun(monitorDelegate.modelData)
                 respectInhibitors: monitorDelegate.modelData && monitorDelegate.modelData.respectInhibitors !== undefined ? monitorDelegate.modelData.respectInhibitors : true
 
                 onIsIdleChanged: {
@@ -371,7 +420,7 @@ Item {
                 enabled: idleRoot.isIdleSystemActive &&
                          monitorDelegate.isValidInPipeline &&
                          monitorDelegate.isActionEnabled &&
-                         (!monitorDelegate.modelData || !monitorDelegate.modelData.mprisInhibit || !idleRoot.isMediaPlaying)
+                         idleRoot.actionMayRun(monitorDelegate.modelData)
                 respectInhibitors: monitorDelegate.modelData && monitorDelegate.modelData.respectInhibitors !== undefined ? monitorDelegate.modelData.respectInhibitors : true
 
                 onIsIdleChanged: {

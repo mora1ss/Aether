@@ -1,5 +1,6 @@
 local config = {
   general = {
+    layout = "dwindle",
     border_size = 0,
     gaps_in = 4,
     gaps_out = 6,
@@ -39,6 +40,10 @@ local config = {
     disable_hyprland_logo = true,
     disable_splash_rendering = true,
   },
+
+  group = {
+    auto_group = false,
+  },
 }
 
 if _G.AETHER_NVIDIA then
@@ -57,6 +62,12 @@ hl.animation({ leaf = "layers", enabled = true, speed = 5, bezier = "myBezier", 
 hl.animation({ leaf = "layersIn", enabled = true, speed = 5, bezier = "myBezier", style = "fade" })
 hl.animation({ leaf = "layersOut", enabled = true, speed = 5, bezier = "myBezier", style = "fade" })
 hl.animation({ leaf = "fade", enabled = true, speed = 5, bezier = "myBezier" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "myBezier", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "myBezier", style = "fade" })
 hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 5, bezier = "myBezier", style = "fade" })
 hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 5, bezier = "myBezier", style = "fade" })
+
+hl.window_rule({
+  name = "idle-inhibit-fullscreen",
+  match = { class = ".*" },
+  idle_inhibit = "fullscreen",
+})
