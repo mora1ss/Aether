@@ -11,62 +11,35 @@
       "left": 3
     }
   },
-  "display": {
-    "separator": "  ",
-    "color": {
-      "separator": "#cdd6f4"
-    }
-  },
   "modules": [
+    "title",
+    "separator",
+    "os",
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "display",
+    "de",
+    "wm",
+    "wmtheme",
+    "theme",
+    "icons",
+    "font",
+    "cursor",
+    "terminal",
+    "terminalfont",
+    "cpu",
+    "gpu",
+    "memory",
+    "swap",
+    "disk",
+    "localip",
+    "battery",
+    "poweradapter",
+    "locale",
     "break",
-    {
-      "type": "title",
-      "format": "{1}",
-      "color": {
-        "user": "#89b4fa"
-      }
-    },
-    "break",
-    {
-      "type": "os",
-      "key": "󱄅 os ",
-      "keyColor": "#89b4fa"
-    },
-    {
-      "type": "cpu",
-      "key": " cpu",
-      "keyColor": "#74c7ec"
-    },
-    {
-      "type": "gpu",
-      "key": "gpu",
-      "keyColor": "#f9e2af"
-    },
-    {
-      "type": "memory",
-      "key": "󰘚 ram",
-      "keyColor": "#94e2d5"
-    },
-    {
-      "type": "packages",
-      "key": "pkgs",
-      "keyColor": "#a6e3a1"
-    },
-    {
-      "type": "os",
-      "key": "age",
-      "format": "{age}",
-      "keyColor": "#fab387"
-    },
-    {
-      "type": "shell",
-      "key": " sh ",
-      "keyColor": "#cba6f7"
-    },
-    "break",
-    {
-      "type": "colors",
-      "symbol": "circle"
-    }
+    "colors"
   ]
 }
