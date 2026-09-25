@@ -17,47 +17,43 @@ QtObject {
     readonly property string runDir: Quickshell.env("QS_RUN_DIR") ? Quickshell.env("QS_RUN_DIR") : ((xdgRuntimeDir !== "" ? xdgRuntimeDir : "/tmp") + "/aether")
     readonly property string logDir: Quickshell.env("QS_LOG_DIR") ? Quickshell.env("QS_LOG_DIR") : (runDir + "/logs")
 
+    property var ensuredDirs: ({})
+
+    function ensureDir(path) {
+        if (!path)
+            return path;
+        if (root.ensuredDirs[path])
+            return path;
+        root.ensuredDirs[path] = true;
+        Quickshell.execDetached(["mkdir", "-p", path]);
+        return path;
+    }
+
     function getCacheDir(widgetName) {
-        if (!widgetName || widgetName === "aether" || cacheDir.endsWith("/" + widgetName)) {
-            Quickshell.execDetached(["mkdir", "-p", cacheDir]);
-            return cacheDir;
-        }
+        if (!widgetName || widgetName === "aether" || cacheDir.endsWith("/" + widgetName))
+            return ensureDir(cacheDir);
         var envPath = Quickshell.env("QS_CACHE_" + widgetName.toUpperCase());
-        var finalPath = envPath ? envPath : (cacheDir + "/" + widgetName);
-        Quickshell.execDetached(["mkdir", "-p", finalPath]);
-        return finalPath;
+        return ensureDir(envPath ? envPath : (cacheDir + "/" + widgetName));
     }
 
     function getStateDir(widgetName) {
-        if (!widgetName || widgetName === "aether" || stateDir.endsWith("/" + widgetName)) {
-            Quickshell.execDetached(["mkdir", "-p", stateDir]);
-            return stateDir;
-        }
+        if (!widgetName || widgetName === "aether" || stateDir.endsWith("/" + widgetName))
+            return ensureDir(stateDir);
         var envPath = Quickshell.env("QS_STATE_" + widgetName.toUpperCase());
-        var finalPath = envPath ? envPath : (stateDir + "/" + widgetName);
-        Quickshell.execDetached(["mkdir", "-p", finalPath]);
-        return finalPath;
+        return ensureDir(envPath ? envPath : (stateDir + "/" + widgetName));
     }
 
     function getRunDir(widgetName) {
-        if (!widgetName || widgetName === "aether" || runDir.endsWith("/" + widgetName)) {
-            Quickshell.execDetached(["mkdir", "-p", runDir]);
-            return runDir;
-        }
+        if (!widgetName || widgetName === "aether" || runDir.endsWith("/" + widgetName))
+            return ensureDir(runDir);
         var envPath = Quickshell.env("QS_RUN_" + widgetName.toUpperCase());
-        var finalPath = envPath ? envPath : (runDir + "/" + widgetName);
-        Quickshell.execDetached(["mkdir", "-p", finalPath]);
-        return finalPath;
+        return ensureDir(envPath ? envPath : (runDir + "/" + widgetName));
     }
 
     function getLogDir(widgetName) {
-        if (!widgetName || widgetName === "aether" || logDir.endsWith("/" + widgetName)) {
-            Quickshell.execDetached(["mkdir", "-p", logDir]);
-            return logDir;
-        }
+        if (!widgetName || widgetName === "aether" || logDir.endsWith("/" + widgetName))
+            return ensureDir(logDir);
         var envPath = Quickshell.env("QS_LOG_" + widgetName.toUpperCase());
-        var finalPath = envPath ? envPath : (logDir + "/" + widgetName);
-        Quickshell.execDetached(["mkdir", "-p", finalPath]);
-        return finalPath;
+        return ensureDir(envPath ? envPath : (logDir + "/" + widgetName));
     }
 }
